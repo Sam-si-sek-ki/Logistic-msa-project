@@ -5,10 +5,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.util.UUID;
 import lombok.AccessLevel;
@@ -16,6 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Table(name = "p_user")
@@ -27,8 +31,8 @@ public class User extends BaseEntity {
 
     @Id
     @NotNull
-    @Size(max = 100)
-    @Column(nullable = false, unique = true, length = 100)
+    @Pattern(regexp = "^[a-z0-9]{4,10}$", message = "username은 소문자와 숫자로 구성된 4자 이상, 10자 이하여야 합니다.")
+    @Column(nullable = false, unique = true, length = 10, updatable = false)
     private String username;
 
     @NotNull
@@ -43,7 +47,10 @@ public class User extends BaseEntity {
     private String email;
 
     @NotNull
-    @Size(min = 8, max = 255) // 비밀번호 길이 제한 (보안 강화 목적).
+    @Pattern(
+            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,15}$",
+            message = "password는 대문자, 소문자, 숫자, 특수문자를 포함한 8자 이상, 15자 이하여야 합니다."
+    )
     @Column(nullable = false, length = 255)
     private String password;
 
@@ -52,7 +59,7 @@ public class User extends BaseEntity {
     private String slackId;
 
     @NotNull
-    @Enumerated(EnumType.STRING) // 데이터베이스에 문자열로 저장하여 가독성을 향상.
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole role;
 
@@ -62,4 +69,33 @@ public class User extends BaseEntity {
     @Column
     private UUID hubId;
 
+    /**
+     * User 객체를 생성하는 팩토리 메서드.
+     */
+    public static User create(String username, String nickname, String email, String rawPassword, UserRole role, UUID companyId, UUID hubId) {
+        User user = User.builder()
+                .username(username)
+                .nickname(nickname)
+                .email(email)
+                .password("") // 초기값 설정
+                .role(role)
+                .companyId(companyId != null ? companyId : null)
+                .hubId(hubId != null ? hubId : null)
+                .build();
+
+        user.setPassword(rawPassword); // 비밀번호 해싱 및 설정
+        return user;
+    }
+
+    /**
+     * 비밀번호를 해싱하여 설정합니다.
+     */
+    public void setPassword(String rawPassword) {
+        this.password = encodePassword(rawPassword);
+    }
+
+    private String encodePassword(String rawPassword) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.encode(rawPassword);
+    }
 }
