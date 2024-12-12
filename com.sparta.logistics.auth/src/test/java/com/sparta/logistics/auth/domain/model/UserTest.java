@@ -1,12 +1,8 @@
 package com.sparta.logistics.auth.domain.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.sparta.logistics.auth.libs.exception.ErrorCode;
-import com.sparta.logistics.auth.libs.exception.GlobalException;
 import java.util.UUID;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
