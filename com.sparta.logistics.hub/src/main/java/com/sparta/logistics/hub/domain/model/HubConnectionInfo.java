@@ -1,5 +1,6 @@
 package com.sparta.logistics.hub.domain.model;
 
+import com.sparta.logistics.hub.libs.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
