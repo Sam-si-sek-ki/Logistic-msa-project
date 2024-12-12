@@ -66,3 +66,9 @@ docker rm -f $(docker ps -aq)
   - order
   - product
 ~~~
+
+# DB 리셋
+~~~
+# 스크립트 실행 (데이터 폴더 재생성 및 컨테이너 재시작) 
+./reset-postgres.sh
+~~~
