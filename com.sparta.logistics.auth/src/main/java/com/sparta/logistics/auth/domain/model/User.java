@@ -8,6 +8,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.UUID;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,9 +18,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Entity
 @Table(name = "p_user")
 @Getter
-@Builder
+@Builder(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
-@AllArgsConstructor
 public class User extends BaseEntity {
 
     @Id
@@ -48,45 +49,15 @@ public class User extends BaseEntity {
     @Column
     private UUID hubId;
 
-    /**
-     * User 객체를 생성합니다.
-     * @param username 사용자 이름
-     * @param nickname 사용자 닉네임
-     * @param email 이메일
-     * @param rawPassword 원시 비밀번호
-     * @param role 사용자 역할
-     * @param companyId 회사 ID
-     * @param hubId 허브 ID
-     * @return User 객체
-     */
-    public static User create(String username, String nickname, String email, String rawPassword, UserRole role, UUID companyId, UUID hubId) {
-        User user = User.builder()
-                .username(username)
-                .nickname(nickname)
-                .email(email)
-                .role(role)
-                .companyId(companyId)
-                .hubId(hubId)
-                .build();
-
-        user.setPassword(rawPassword); // 비밀번호 해싱 및 설정
-        return user;
-    }
-
-    /**
-     * 비밀번호를 해싱하여 설정합니다.
-     */
-    public void setPassword(String rawPassword) {
-        this.password = encodePassword(rawPassword);
-    }
-
-    /**
-     * 비밀번호를 해싱합니다.
-     * @param rawPassword 원시 비밀번호
-     * @return 해싱된 비밀번호
-     */
-    private String encodePassword(String rawPassword) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder.encode(rawPassword);
+     public static User create(String username, String nickname, String email, String encryptedPassword, UserRole role, UUID companyId, UUID hubId) {
+         return User.builder()
+                 .username(username)
+                 .nickname(nickname)
+                 .email(email)
+                 .password(encryptedPassword)
+                 .role(role)
+                 .companyId(companyId)
+                 .hubId(hubId)
+                 .build();
     }
 }

@@ -1,6 +1,6 @@
-package com.sparta.logistics.auth.application.dto;
+package com.sparta.logistics.auth.presentation.dto;
 
-import com.sparta.logistics.auth.domain.model.User;
+import com.sparta.logistics.auth.application.dto.UserRequest;
 import com.sparta.logistics.auth.domain.model.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +12,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserRequestDto {
+public class CreateUserRequest {
 
     @NotNull
     @Pattern(regexp = "^[a-z0-9]{4,10}$", message = "username은 소문자와 숫자로 구성된 4자 이상, 10자 이하여야 합니다.")
@@ -44,17 +44,16 @@ public class UserRequestDto {
 
     private UUID hubId;
 
-    public static User toEntity(UserRequestDto dto) {
-        User user = User.builder()
-                .username(dto.getUsername())
-                .nickname(dto.getNickname())
-                .email(dto.getEmail())
-                .role(dto.getRole())
-                .companyId(dto.getCompanyId())
-                .hubId(dto.getHubId())
-                .build();
-
-        user.setPassword(dto.getPassword()); // 비밀번호 해싱
-        return user;
+    public UserRequest toDTO() {
+        return UserRequest.create(
+                this.username,
+                this.nickname,
+                this.email,
+                this.password,
+                this.slackId,
+                this.role,
+                this.companyId,
+                this.hubId
+        );
     }
 }

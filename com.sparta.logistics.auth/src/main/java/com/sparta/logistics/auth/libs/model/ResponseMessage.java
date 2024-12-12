@@ -19,8 +19,8 @@ public enum ResponseMessage{
      * )
      */
 
-    // domain
-    HUB_CREATE_SUCCESS("허브 등록 성공"),
+    // User
+    USER_CREATE_SUCCESS("사용자 등록 성공"),
 
     ;
     private final String message;
