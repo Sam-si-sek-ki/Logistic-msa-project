@@ -2,9 +2,29 @@ spring:
   application:
     name: product-service
 
+  datasource:
+    url: jdbc:postgresql://localhost:15432/sparta_product
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show_sql: true
+      format_sql: true
+      use_sql_comments: true
+
 server:
   port: 19098
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:19090/eureka/
+
+# todo : 추후 eureka 서버 가동 시 사용하기
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:19090/eureka/
+---
+# todo : 추후 config 서버 가동 시 삭제하기
+spring:
+  cloud:
+    config:
+      enabled: false
