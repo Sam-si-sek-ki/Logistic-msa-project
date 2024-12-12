@@ -1,10 +1,17 @@
+server:
+  port: 19094
+
 spring:
   application:
     name: hub-service
+  config:
+    import: configserver:http://localhost:19092 # Config Server 주소
+#  cloud:
+#    config:
+#      discovery:
+#        enabled: true # Eureka를 통해 Config Server 탐색 가능
 
-server:
-  port: 19094
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:19090/eureka/
+      defaultZone: http://localhost:19090/eureka/ # Eureka Server 주소
