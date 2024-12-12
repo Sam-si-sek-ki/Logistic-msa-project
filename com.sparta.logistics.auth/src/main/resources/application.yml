@@ -16,6 +16,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+#    defer-datasource-initialization: true # 테이블 생성 후에 data.sql 실행
 
 server:
   port: 19093
