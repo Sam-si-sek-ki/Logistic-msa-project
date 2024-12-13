@@ -20,7 +20,7 @@ public class Driver {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
-  @Column(name = "driver_id", updatable = false)
+  @Column(name = "driver_id", updatable = false, columnDefinition = "uuid")
   private UUID driverId;
 
   @Column(name = "hub_id", columnDefinition = "uuid", nullable = false)

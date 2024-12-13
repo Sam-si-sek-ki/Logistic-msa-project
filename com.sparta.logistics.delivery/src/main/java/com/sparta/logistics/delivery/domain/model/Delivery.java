@@ -20,16 +20,16 @@ public class Delivery {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
-  @Column(name = "delivery_id")
+  @Column(name = "delivery_id", columnDefinition = "uuid")
   private UUID deliveryId;
 
-  @Column(columnDefinition = "uuid", nullable = false)
+  @Column(name = "order_id", columnDefinition = "uuid", nullable = false)
   private UUID orderId;
 
   @Column(name = "delivery_status", nullable = false)
   private DeliveryStatus deliveryStatus;
 
-  @Column(name = "from_hub_id", nullable = false)
+  @Column(name = "from_hub_id", nullable = false, columnDefinition = "uuid")
   private UUID fromHubId;
 
   @Column(name = "to_hub_id", nullable = false)

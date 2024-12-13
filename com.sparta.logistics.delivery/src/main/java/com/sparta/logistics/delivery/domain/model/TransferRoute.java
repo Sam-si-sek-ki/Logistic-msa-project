@@ -19,7 +19,7 @@ public class TransferRoute {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
-  @Column(name = "transfer_route_id")
+  @Column(name = "transfer_route_id", columnDefinition = "uuid")
   private UUID transferRouteId;
 
   @Column(name = "delivery_id", nullable = false)
@@ -28,10 +28,10 @@ public class TransferRoute {
   @Column(name = "transfer_route_id", nullable = false)
   private Integer sequence;
 
-  @Column(name = "from_hub_id", nullable = false)
+  @Column(name = "from_hub_id", nullable = false, columnDefinition = "uuid")
   private UUID fromHubId;
 
-  @Column(name = "to_hub_id", nullable = false)
+  @Column(name = "to_hub_id", nullable = false, columnDefinition = "uuid")
   private UUID toHubId;
 
   @Column(name = "expected_distance", nullable = false)
@@ -49,7 +49,7 @@ public class TransferRoute {
   @Column(name = "transfer_status", nullable = false)
   private TransferStatus transferStatus;
 
-  @Column(name = "driver_id", nullable = false)
+  @Column(name = "driver_id", nullable = false, columnDefinition = "uuid")
   private UUID driverId;
 
   public TransferRoute(UUID transferRouteId, UUID deliveryId, Integer sequence, UUID fromHubId,
