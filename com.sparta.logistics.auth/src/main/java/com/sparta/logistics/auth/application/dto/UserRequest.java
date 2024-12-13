@@ -1,6 +1,5 @@
 package com.sparta.logistics.auth.application.dto;
 
-import com.sparta.logistics.auth.domain.model.User;
 import com.sparta.logistics.auth.domain.model.UserRole;
 import java.util.UUID;
 import lombok.AccessLevel;

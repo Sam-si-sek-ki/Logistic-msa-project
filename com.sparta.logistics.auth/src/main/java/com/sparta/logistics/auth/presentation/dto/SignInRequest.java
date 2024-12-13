@@ -1,12 +1,7 @@
 package com.sparta.logistics.auth.presentation.dto;
 
-import com.sparta.logistics.auth.application.dto.UserRequest;
-import com.sparta.logistics.auth.domain.model.UserRole;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
-import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 

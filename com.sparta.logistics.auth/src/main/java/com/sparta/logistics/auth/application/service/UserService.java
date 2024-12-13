@@ -1,15 +1,12 @@
 package com.sparta.logistics.auth.application.service;
 
-import com.sparta.logistics.auth.application.dto.AuthResponse;
 import com.sparta.logistics.auth.application.dto.UserRequest;
 import com.sparta.logistics.auth.application.dto.UserResponse;
 import com.sparta.logistics.auth.domain.model.User;
 import com.sparta.logistics.auth.domain.repository.UserRepository;
 import com.sparta.logistics.auth.libs.exception.ErrorCode;
 import com.sparta.logistics.auth.libs.exception.GlobalException;
-import com.sparta.logistics.auth.presentation.dto.SignInRequest;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
