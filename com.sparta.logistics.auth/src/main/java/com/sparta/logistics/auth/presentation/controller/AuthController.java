@@ -1,10 +1,13 @@
 package com.sparta.logistics.auth.presentation.controller;
 
+import com.sparta.logistics.auth.application.dto.AuthResponse;
 import com.sparta.logistics.auth.application.dto.UserResponse;
+import com.sparta.logistics.auth.application.service.AuthService;
 import com.sparta.logistics.auth.application.service.UserService;
 import com.sparta.logistics.auth.libs.model.ResponseMessage;
 import com.sparta.logistics.auth.libs.model.SuccessResponse;
 import com.sparta.logistics.auth.presentation.dto.CreateUserRequest;
+import com.sparta.logistics.auth.presentation.dto.SignInRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +24,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final UserService userService;
+    private final AuthService authService;
+
+    // 로그인
+    @PostMapping("/signin")
+    public ResponseEntity<SuccessResponse<AuthResponse>> signIn(@RequestBody @Valid SignInRequest request) {
+        return ResponseEntity.ok().body(SuccessResponse.of(ResponseMessage.LOGIN_SUCCESS, authService.createAccessToken(request)));
+    }
 
     // 회원 가입
     @PostMapping("/signup")
-    public ResponseEntity<SuccessResponse<UserResponse>> createUser(@RequestBody @Valid CreateUserRequest request) {
+    public ResponseEntity<SuccessResponse<UserResponse>> signUp(@RequestBody @Valid CreateUserRequest request) {
         return ResponseEntity.ok().body(SuccessResponse.of(ResponseMessage.USER_CREATE_SUCCESS, userService.createUser(request.toDTO())));
     }
 
