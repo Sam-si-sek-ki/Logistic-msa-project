@@ -5,6 +5,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.UUID;
@@ -13,7 +15,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Table(name = "p_user")
@@ -24,6 +25,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class User extends BaseEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", updatable = false, nullable = false)
+    private Long id;
+
     @Column(nullable = false, unique = true, length = 10, updatable = false)
     private String username;
 
@@ -49,7 +54,16 @@ public class User extends BaseEntity {
     @Column
     private UUID hubId;
 
-     public static User create(String username, String nickname, String email, String encryptedPassword, UserRole role, UUID companyId, UUID hubId) {
+    // 유저 생성 메서드
+     public static User create(
+             String username,
+             String nickname,
+             String email,
+             String encryptedPassword,
+             UserRole role,
+             UUID companyId,
+             UUID hubId
+     ) {
          return User.builder()
                  .username(username)
                  .nickname(nickname)
