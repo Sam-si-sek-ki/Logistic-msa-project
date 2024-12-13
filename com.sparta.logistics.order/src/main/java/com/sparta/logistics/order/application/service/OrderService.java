@@ -3,6 +3,8 @@ package com.sparta.logistics.order.application.service;
 import com.sparta.logistics.order.domain.model.Order;
 import com.sparta.logistics.order.domain.repository.OrderRepository;
 import com.sparta.logistics.order.infrastructure.clinet.DeliveryServiceClient;
+import com.sparta.logistics.order.infrastructure.clinet.ProductServiceClient;
+import com.sparta.logistics.order.infrastructure.dto.StockDecreaseRequest;
 import com.sparta.logistics.order.libs.exception.ErrorCode;
 import com.sparta.logistics.order.libs.exception.GlobalException;
 import com.sparta.logistics.order.presentation.dto.OrderRequestDto;
@@ -19,16 +21,21 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final DeliveryServiceClient deliveryServiceClient;
+    private final ProductServiceClient productServiceClient;
 
     @Transactional
     public OrderResponseDto createOrder(@Valid OrderRequestDto request) {
+        //상품 존재여부 확인 + 상품 수량 감소
+        productServiceClient.decreaseStock(
+            request.getProductId(),
+            new StockDecreaseRequest(request.getOrderQuantity())
+        );
         // order 생성
         Order order = Order.create(request);
-
         Order savedOrder = orderRepository.save(order);
+
         OrderResponseDto deliveryResponse = deliveryServiceClient.deliverOrder(savedOrder);
         savedOrder.setDeliveryId(deliveryResponse.getDeliveryId());
-
         return OrderResponseDto.from(order);
     }
 
@@ -50,7 +57,8 @@ public class OrderService {
 
     @Transactional
     public void deleteOrder(UUID orderId) {
-        Order order = orderRepository.findById(orderId).orElseThrow(() -> new GlobalException(ErrorCode.ORDER_NOT_FOUND));
+        Order order = orderRepository.findById(orderId)
+            .orElseThrow(() -> new GlobalException(ErrorCode.ORDER_NOT_FOUND));
         // todo : 사용자 정보 받을 수 있을 떄 수정하기
 //        order.setDelete();
     }

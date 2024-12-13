@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @FeignClient(name = "delivery-service", url = "${delivery-service.url}")
 public interface DeliveryServiceClient {
-
     @PostMapping("/delivery")
     OrderResponseDto deliverOrder(Order order);
 }

@@ -8,3 +8,10 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:19090/eureka/
+
+# todo : 추후 변경하기
+product-service:
+  url: http://localhost:19098/product-service
+
+delivery-service:
+  url: http://localhost:19098/delivery-service
