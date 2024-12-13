@@ -2,6 +2,7 @@ package com.sparta.logistics.product.presentation.controller;
 
 import com.sparta.logistics.product.application.dto.StockDecreaseRequest;
 import com.sparta.logistics.product.application.service.ProductService;
+import com.sparta.logistics.product.domain.model.Product;
 import com.sparta.logistics.product.libs.model.ResponseMessage;
 import com.sparta.logistics.product.libs.model.SuccessResponse;
 import com.sparta.logistics.product.presentation.dto.ProductRequestDto;
@@ -29,7 +30,7 @@ public class ProductController {
 
     @PostMapping
     // todo : 담당 권한이 있는지 확인필요
-    public ResponseEntity<SuccessResponse<?>> createUser(
+    public ResponseEntity<SuccessResponse<Product>> createProduct(
         @RequestBody @Valid ProductRequestDto request) {
         return ResponseEntity.ok().body(
             SuccessResponse.of(ResponseMessage.PRODUCT_CREATE_SUCCESS,
