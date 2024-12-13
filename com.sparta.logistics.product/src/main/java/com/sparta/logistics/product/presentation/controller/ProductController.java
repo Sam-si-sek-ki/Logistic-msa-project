@@ -1,7 +1,10 @@
 package com.sparta.logistics.product.presentation.controller;
 
 import com.sparta.logistics.product.application.service.ProductService;
+import com.sparta.logistics.product.libs.model.ResponseMessage;
+import com.sparta.logistics.product.libs.model.SuccessResponse;
 import com.sparta.logistics.product.presentation.dto.ProductRequestDto;
+import jakarta.validation.Valid;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
@@ -25,24 +28,32 @@ public class ProductController {
 
     @PostMapping
     // todo : 담당 권한이 있는지 확인필요
-    public ResponseEntity<?> createProduct(@RequestBody ProductRequestDto request) {
-        return ResponseEntity.ok(productService.createProduct(request));
+    public ResponseEntity<SuccessResponse<?>> createUser(
+        @RequestBody @Valid ProductRequestDto request) {
+        return ResponseEntity.ok().body(
+            SuccessResponse.of(ResponseMessage.PRODUCT_CREATE_SUCCESS,
+                productService.createProduct(request)));
     }
 
     @GetMapping("/{productId}")
     // todo : 자신의 상품인지? 확인필요
-    public ResponseEntity<?> getProducts(@PathVariable UUID productId) {
-        return ResponseEntity.ok(productService.getProduct(productId));
+    public ResponseEntity<SuccessResponse<?>> getProducts(@PathVariable UUID productId) {
+        return ResponseEntity.ok().body(
+            SuccessResponse.of(ResponseMessage.PRODUCT_GET_SUCCESS,
+                productService.getProduct(productId)));
     }
 
     @PutMapping("/{productId}")
     // todo : 담당 권한이 있는지 확인필요
-    public ResponseEntity<?> updateProduct(@PathVariable UUID productId, @RequestBody ProductRequestDto request) {
-        return ResponseEntity.ok(productService.updateProduct(productId, request));
+    public ResponseEntity<SuccessResponse<?>> updateProduct(@PathVariable UUID productId,
+        @RequestBody ProductRequestDto request) {
+        return ResponseEntity.ok().body(SuccessResponse.of(ResponseMessage.PRODUCT_UPDATE_SUCCESS,
+            productService.updateProduct(productId, request)));
     }
 
     @DeleteMapping("/{productId}")
-    public ResponseEntity<?> deleteProduct(@PathVariable UUID productId) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<SuccessResponse<?>> deleteProduct(@PathVariable UUID productId) {
+        productService.softDeleteProduct(productId);
+        return ResponseEntity.ok().body(SuccessResponse.of(ResponseMessage.PRODUCT_DELETE_SUCCESS));
     }
 }

@@ -17,21 +17,7 @@ public enum ErrorCode {
 
 
     // domain
-    HUB_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 허브를 찾을 수 없습니다."),
-
-    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 상품을 찾을 수 없습니다.")
-    /**
-     * 사용 예
-     * **CUSTOM_NAME**(HttpStatus.**ENUM_NAME**,"**MESSAGE**"),
-     * 위 코드를 작성하고
-     * throw new GlobalException(**CUSTOM_NAME**));
-     * 위 코드와 같이 throw 요청시 처리됩니다.
-     *
-     * ex) HUB_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 허브를 찾을 수 없습니다.")
-     * ex) throw new GlobalException(HUB_NOT_FOUND)
-     */
-
-    ;
+    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 상품을 찾을 수 없습니다.");
     private final HttpStatus httpStatus;
     private final String description;
 }

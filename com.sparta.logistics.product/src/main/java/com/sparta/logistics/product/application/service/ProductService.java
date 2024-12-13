@@ -47,7 +47,7 @@ public class ProductService {
         // todo : 권한 + 유저확인 후 로직 실행되도록 변경 
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new GlobalException(ErrorCode.PRODUCT_NOT_FOUND));
-
-        product.setDelete();
+        // todo : 게이트웨이로 부터 정보를 받아오면 수정하기
+//        product.setDelete();
     }
 }

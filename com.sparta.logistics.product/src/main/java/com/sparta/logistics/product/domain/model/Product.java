@@ -3,6 +3,8 @@ package com.sparta.logistics.product.domain.model;
 import com.sparta.logistics.product.presentation.dto.ProductRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.UUID;
@@ -21,6 +23,7 @@ import com.sparta.logistics.product.libs.model.BaseEntity;
 public class Product extends BaseEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID productId;
 
     @Column(nullable = false)
@@ -40,7 +43,6 @@ public class Product extends BaseEntity {
 
     public static Product create(ProductRequestDto request) {
         return Product.builder()
-            .productId(UUID.randomUUID())
             .productName(request.getProductName())
             .stockQuantity(request.getStockQuantity())
             .description(request.getDescription())
