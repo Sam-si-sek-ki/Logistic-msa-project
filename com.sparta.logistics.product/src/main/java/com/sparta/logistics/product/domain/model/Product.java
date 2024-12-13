@@ -1,5 +1,6 @@
 package com.sparta.logistics.product.domain.model;
 
+import com.sparta.logistics.product.libs.model.BaseEntity;
 import com.sparta.logistics.product.presentation.dto.ProductRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,7 +13,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import com.sparta.logistics.product.libs.model.BaseEntity;
 
 @Entity
 @Getter
@@ -55,5 +55,9 @@ public class Product extends BaseEntity {
         this.productName = request.getProductName();
         this.stockQuantity = request.getStockQuantity();
         this.description = request.getDescription();
+    }
+
+    public void setStockQuantity(int stockQuantity) {
+        this.stockQuantity = stockQuantity;
     }
 }

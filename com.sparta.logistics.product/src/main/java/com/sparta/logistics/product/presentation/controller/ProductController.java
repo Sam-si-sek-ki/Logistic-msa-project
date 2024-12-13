@@ -1,5 +1,6 @@
 package com.sparta.logistics.product.presentation.controller;
 
+import com.sparta.logistics.product.application.dto.StockDecreaseRequest;
 import com.sparta.logistics.product.application.service.ProductService;
 import com.sparta.logistics.product.libs.model.ResponseMessage;
 import com.sparta.logistics.product.libs.model.SuccessResponse;
@@ -55,5 +56,17 @@ public class ProductController {
     public ResponseEntity<SuccessResponse<?>> deleteProduct(@PathVariable UUID productId) {
         productService.softDeleteProduct(productId);
         return ResponseEntity.ok().body(SuccessResponse.of(ResponseMessage.PRODUCT_DELETE_SUCCESS));
+    }
+    // todo : search 추가
+
+
+    // 주문 시 재고량 감소
+    @PostMapping("/{productId}/decrease-stock")
+    public ResponseEntity<SuccessResponse<?>> decreaseStock(
+        @PathVariable UUID productId,
+        @RequestBody @Valid StockDecreaseRequest request
+    ) {
+        productService.decreaseStock(productId, request.getOrderQuantity());
+        return ResponseEntity.ok().body(SuccessResponse.of(ResponseMessage.PRODUCT_STOCK_DECREASE_SUCCESS));
     }
 }

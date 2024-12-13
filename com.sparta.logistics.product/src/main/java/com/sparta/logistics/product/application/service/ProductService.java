@@ -19,9 +19,8 @@ public class ProductService {
 
     @Transactional
     public Product createProduct(ProductRequestDto request) {
-
+    // todo : 사용자 인증 및 권한 확인
         Product product = Product.create(request);
-
         return productRepository.save(product);
     }
 
@@ -29,7 +28,6 @@ public class ProductService {
     public ProductResponseDto getProduct(UUID productId) {
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new GlobalException(ErrorCode.PRODUCT_NOT_FOUND));
-
         return ProductResponseDto.from(product);
     }
 
@@ -48,6 +46,19 @@ public class ProductService {
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new GlobalException(ErrorCode.PRODUCT_NOT_FOUND));
         // todo : 게이트웨이로 부터 정보를 받아오면 수정하기
-//        product.setDelete();
+        // product.setDelete();
+    }
+
+    // 주문 시 상품 존재 여부 확인 및 재고량 감소
+    @Transactional
+    public void decreaseStock(UUID productId, int orderQuantity) {
+        Product product = productRepository.findById(productId)
+            .orElseThrow(() -> new GlobalException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        if (product.getStockQuantity() < orderQuantity) {
+            throw new GlobalException(ErrorCode.PRODUCT_INSUFFICIENT_STOCK);
+        }
+        product.setStockQuantity(product.getStockQuantity() - orderQuantity);
+        productRepository.save(product);
     }
 }
