@@ -26,7 +26,7 @@ public class TransferRoute extends BaseEntity {
   @Column(name = "delivery_id", nullable = false)
   private UUID deliveryId;
 
-  @Column(name = "transfer_route_id", nullable = false)
+  @Column(name = "sequence", nullable = false)
   private Integer sequence;
 
   @Column(name = "from_hub_id", nullable = false, columnDefinition = "uuid")
