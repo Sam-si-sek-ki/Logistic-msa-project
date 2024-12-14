@@ -1,5 +1,6 @@
 package com.sparta.logistics.delivery.domain.model;
 
+import com.sparta.logistics.delivery.libs.model.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class Driver {
+public class Driver extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)

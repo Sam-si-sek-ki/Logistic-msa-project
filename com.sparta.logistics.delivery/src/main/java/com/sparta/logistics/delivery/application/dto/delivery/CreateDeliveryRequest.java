@@ -47,7 +47,6 @@ public class CreateDeliveryRequest {
         .deliveryMainAddress(this.deliveryMainAddress)
         .deliveryDetailAddress(this.deliveryDetailAddress)
         .recipientName(this.recipientName)
-//        .isDeleted(false)
         .build();
   }
 }
