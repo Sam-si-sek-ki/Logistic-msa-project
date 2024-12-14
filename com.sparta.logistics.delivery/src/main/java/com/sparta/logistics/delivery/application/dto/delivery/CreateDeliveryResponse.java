@@ -3,7 +3,6 @@ package com.sparta.logistics.delivery.application.dto.delivery;
 
 import com.sparta.logistics.delivery.domain.model.Delivery;
 import com.sparta.logistics.delivery.domain.model.DeliveryStatus;
-import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;

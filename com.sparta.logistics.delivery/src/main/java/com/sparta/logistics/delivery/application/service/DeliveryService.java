@@ -2,13 +2,12 @@ package com.sparta.logistics.delivery.application.service;
 
 import com.sparta.logistics.delivery.application.dto.delivery.CreateDeliveryRequest;
 import com.sparta.logistics.delivery.application.dto.delivery.CreateDeliveryResponse;
+import com.sparta.logistics.delivery.application.validation.DeliveryValidation;
 import com.sparta.logistics.delivery.domain.model.Delivery;
 import com.sparta.logistics.delivery.domain.repository.DeliveryRepository;
 import com.sparta.logistics.delivery.infrastructure.client.CompanyServiceClient;
-import com.sparta.logistics.delivery.infrastructure.client.HubTransferServiceClient;
 import com.sparta.logistics.delivery.infrastructure.client.OrderServiceClient;
 import com.sparta.logistics.delivery.infrastructure.client.dto.CompanyClientResponse;
-import com.sparta.logistics.delivery.infrastructure.client.dto.HubTransferClientResponse;
 import com.sparta.logistics.delivery.infrastructure.client.dto.OrderResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +22,7 @@ public class DeliveryService {
   private final DeliveryRepository deliveryRepository;
   private final OrderServiceClient orderServiceClient;
   private final CompanyServiceClient companyServiceClient;
+  private final DeliveryValidation deliveryValidation;
 
   @Transactional
   public CreateDeliveryResponse createDelivery(OrderResponseDto orderResponseDto) {
@@ -42,6 +42,8 @@ public class DeliveryService {
         receiverCompany,
         supplierCompany
     );
+
+    deliveryValidation.createDeliveryValidation(request);
 
     Delivery delivery = request.toEntity();
     delivery = deliveryRepository.save(delivery);
