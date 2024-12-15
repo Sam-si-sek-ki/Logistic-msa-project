@@ -13,6 +13,7 @@ import com.sparta.logistics.delivery.infrastructure.client.dto.CompanyClientResp
 import com.sparta.logistics.delivery.infrastructure.client.dto.OrderResponseDto;
 import com.sparta.logistics.delivery.libs.exception.ErrorCode;
 import com.sparta.logistics.delivery.libs.exception.GlobalException;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -67,5 +68,13 @@ public class DeliveryService {
     request.updateDelivery(delivery);
 
     return GetDeliveryResponse.fromEntity(delivery);
+  }
+
+  public void deleteDelivery(UUID deliveryId, Long userId) {
+
+    Delivery delivery = deliveryRepository.findByDeliveryIdAndDeletedFalse(deliveryId)
+        .orElseThrow(() -> new GlobalException(ErrorCode.DELIVERY_NOT_FOUND));
+
+    delivery.setDelete(LocalDateTime.now(), userId.toString());
   }
 }

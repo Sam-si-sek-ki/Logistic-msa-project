@@ -14,7 +14,7 @@ public class UpdateDeliveryRequest {
   private String recipientName;
 
   public void updateDelivery(Delivery delivery) {
-    Delivery.updateDeliveryInfo(
+    delivery.updateDeliveryInfo(
         fromHubId,
         toHubId,
         deliveryMainAddress,
