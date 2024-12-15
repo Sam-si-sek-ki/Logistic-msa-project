@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class HubService {
     private final HubMapper hubMapper;
 
     @Transactional(readOnly = true)
-    public HubResponseDto getHubById(String hubId) {
+    public HubResponseDto getHubById(UUID hubId) {
         return hubMapper.toDto(
             hubRepository.findById(hubId).orElseThrow( () -> new GlobalException(HUB_NOT_FOUND))
         );
@@ -50,7 +51,7 @@ public class HubService {
         hubRepository.save(hub);
     }
 
-    public void deleteHub(String hubId) {
+    public void deleteHub(UUID hubId) {
 
         Hub hub = hubRepository.findById(hubId).orElseThrow( () -> new GlobalException(HUB_NOT_FOUND));
 
@@ -61,7 +62,7 @@ public class HubService {
     }
 
     @Transactional
-    public void updateHub(String hubId, HubRequestDto request) {
+    public void updateHub(UUID hubId, HubRequestDto request) {
 
         Hub hub = hubRepository.findById(hubId).orElseThrow( () -> new GlobalException(HUB_NOT_FOUND));
 

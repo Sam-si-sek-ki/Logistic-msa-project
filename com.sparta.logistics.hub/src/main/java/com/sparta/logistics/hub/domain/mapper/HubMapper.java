@@ -10,7 +10,7 @@ public class HubMapper {
     // Entity -> DTO 변환
     public HubResponseDto toDto(Hub hub) {
         return new HubResponseDto(
-            hub.getHubId(),
+            hub.getHubId().toString(),
             hub.getName(),
             hub.getAddress(),
             hub.getAddressDetail(),

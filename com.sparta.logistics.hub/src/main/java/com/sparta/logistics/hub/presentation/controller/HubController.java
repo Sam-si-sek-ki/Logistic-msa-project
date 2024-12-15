@@ -16,6 +16,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 import static com.sparta.logistics.hub.libs.model.ResponseMessage.HUB_CREATE_SUCCESS;
 import static com.sparta.logistics.hub.libs.model.ResponseMessage.HUB_SELECT_SUCCESS;
 
@@ -30,7 +32,7 @@ public class HubController {
     @GetMapping("/{hubId}")
     public ResponseEntity<SuccessResponse<HubResponseDto>> getHubById(@PathVariable("hubId") String hubId){
         log.info("👀👀 get hub by id: {} 👀👀", hubId);
-        return ResponseEntity.ok(SuccessResponse.of(HUB_SELECT_SUCCESS,hubService.getHubById(hubId)));
+        return ResponseEntity.ok(SuccessResponse.of(HUB_SELECT_SUCCESS,hubService.getHubById(UUID.fromString(hubId))));
     }
 
     @GetMapping
@@ -49,7 +51,7 @@ public class HubController {
 
     @DeleteMapping("/{hubId}")
     public ResponseEntity<SuccessResponse<HubResponseDto>> deleteHub(@PathVariable("hubId") String hubId){
-        hubService.deleteHub(hubId);
+        hubService.deleteHub(UUID.fromString(hubId));
         return ResponseEntity.ok(SuccessResponse.of(HUB_CREATE_SUCCESS));
     }
 
@@ -58,7 +60,7 @@ public class HubController {
             @PathVariable("hubId") String hubId,
             @RequestBody HubRequestDto request
     ){
-        hubService.updateHub(hubId, request);
+        hubService.updateHub(UUID.fromString(hubId), request);
         return ResponseEntity.ok(SuccessResponse.of(HUB_CREATE_SUCCESS));
     }
 }
