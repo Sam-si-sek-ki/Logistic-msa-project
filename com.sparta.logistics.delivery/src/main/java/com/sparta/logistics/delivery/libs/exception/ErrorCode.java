@@ -22,7 +22,9 @@ public enum ErrorCode {
     DELIVERY_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 배송을 찾을 수 없습니다."),
     INVALID_DELIVERY_INFO(HttpStatus.BAD_REQUEST, "배송 정보가 유효하지 않습니다."),
     INVALID_HUB_INFO(HttpStatus.BAD_REQUEST, "허브 정보가 유효하지 않습니다."),
-    INVALID_HUB_ROUTE(HttpStatus.BAD_REQUEST, "출발지와 도착지 허브가 동일할 수 없습니다.");
+    INVALID_HUB_ROUTE(HttpStatus.BAD_REQUEST, "출발지와 도착지 허브가 동일할 수 없습니다."),
+    INVALID_DELIVERY_STATUS(HttpStatus.BAD_REQUEST, "배송 상태가 PENDING일 경우에만 배송 정보를 수정할 수 있습니다.");
+
 
     private final HttpStatus httpStatus;
     private final String description;
