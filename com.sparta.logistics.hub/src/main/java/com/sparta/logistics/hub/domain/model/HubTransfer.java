@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,7 +18,7 @@ public class HubTransfer extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String hubTransferId;
+    private UUID hubTransferId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "from_hub_id", nullable = false)
