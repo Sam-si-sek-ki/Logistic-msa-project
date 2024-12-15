@@ -1,5 +1,6 @@
 package com.sparta.logistics.hub.domain.mapper;
 
+import com.sparta.logistics.hub.application.dto.HubRequestDto;
 import com.sparta.logistics.hub.application.dto.HubResponseDto;
 import com.sparta.logistics.hub.domain.model.Hub;
 import org.springframework.stereotype.Component;
@@ -19,9 +20,8 @@ public class HubMapper {
     }
 
     // DTO -> Entity 변환 (필요 시)
-    public Hub toEntity(HubResponseDto dto) {
+    public Hub toEntity(HubRequestDto dto) {
         return Hub.builder()
-            .hubId(dto.hubId())
             .name(dto.name())
             .address(dto.address())
             .addressDetail(dto.addressDetail())

@@ -6,10 +6,11 @@ spring:
     name: hub-service
   config:
     import: configserver:http://localhost:19092 # Config Server 주소
-#  cloud:
-#    config:
-#      discovery:
-#        enabled: true # Eureka를 통해 Config Server 탐색 가능
+  jpa:
+    properties:
+      hibernate:
+        default_batch_fetch_size: 500
+    open-in-view: false
 
 eureka:
   client:
