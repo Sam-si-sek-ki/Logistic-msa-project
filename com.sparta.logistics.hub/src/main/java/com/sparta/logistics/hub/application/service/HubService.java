@@ -45,12 +45,14 @@ public class HubService {
         return HubPageResponse.of(hubPage);
     }
 
+    @Transactional
     public void insertHub(HubRequestDto request) {
 
         Hub hub = hubMapper.toEntity(request);
         hubRepository.save(hub);
     }
 
+    @Transactional
     public void deleteHub(UUID hubId) {
 
         Hub hub = hubRepository.findById(hubId).orElseThrow( () -> new GlobalException(HUB_NOT_FOUND));
