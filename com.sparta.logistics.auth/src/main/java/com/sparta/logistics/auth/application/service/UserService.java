@@ -22,11 +22,13 @@ public class UserService {
     @Transactional
     public UserResponse createUser(UserRequest request) {
 
-        // username, email 중복 확인
-        if (verifyUsername(request.getUsername())) {
+        // validation
+        if (isUsernameExists(request.getUsername())) { // username 중복 확인
             throw new GlobalException(ErrorCode.USERNAME_ALEADY_EXISTS);
-        } else if (verifyEmail(request.getEmail())) {
+        } else if (isEmailExists(request.getEmail())) { // email 중복 확인
             throw new GlobalException(ErrorCode.EMAIL_ALEADY_EXISTS);
+        } else if (!isSlackIdValid(request.getSlackId())) { // slackId 유효성 검사
+            throw new GlobalException(ErrorCode.SLACKID_VALIDATION_FAILED);
         }
 
         // 비밀번호 암호화
@@ -48,14 +50,20 @@ public class UserService {
     }
 
     // Username 존재 여부 확인
-    public Boolean verifyUsername(String username) {
+    public Boolean isUsernameExists(String username) {
         // username 으로 User 를 조회 후 isPresent() 로 존재유무를 리턴함
         return userRepository.findByUsername(username).isPresent();
     }
 
     // Email 존재 여부 확인
-    public Boolean verifyEmail(String email) {
+    public Boolean isEmailExists(String email) {
         // email 로 User 를 조회 후 isPresent() 로 존재유무를 리턴함
         return userRepository.findByEmail(email).isPresent();
+    }
+
+    // SlackId 유효성 검사
+    public Boolean isSlackIdValid(String slackId) {
+        // TODO : Slack ID 유효성 검사 구현
+        return true;
     }
 }

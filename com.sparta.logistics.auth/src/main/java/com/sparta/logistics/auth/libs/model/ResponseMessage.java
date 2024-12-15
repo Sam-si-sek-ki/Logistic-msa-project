@@ -8,6 +8,7 @@ import lombok.Getter;
 public enum ResponseMessage{
 
     // global
+    FIELD_VALIDATION_SUCCESS("필드 검증 성공"),
 
     /**
      * 사용 예
@@ -23,6 +24,9 @@ public enum ResponseMessage{
     LOGIN_SUCCESS("로그인 성공"),
     LOGIN_FAIL("로그인 실패"),
     USER_CREATE_SUCCESS("사용자 등록 성공"),
+    VALID_USERNAME("사용 가능한 username 입니다."),
+    VALID_EMAIL("사용 가능한 email 입니다."),
+    VALID_SLACKID("사용 가능한 slackId 입니다.")
 
     ;
     private final String message;
