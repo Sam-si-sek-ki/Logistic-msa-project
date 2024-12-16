@@ -21,10 +21,10 @@ public class ProductService {
     @Transactional
     public Product createProduct(ProductRequestDto request, String userName, String userRole) {
 
-        boolean companyAndHubExists = companyFeignClient.isCompanyExist(request.getCompanyId(), userName, userRole);
-        if (!companyAndHubExists) {
-            throw new RuntimeException("상품 등록 권한 또는 업체정보가 없습니다.");
-        }
+//        boolean companyAndHubExists = companyFeignClient.isCompanyExist(request.getCompanyId(), userName, userRole);
+//        if (!companyAndHubExists) {
+//            throw new IllegalArgumentException("상품 등록 권한 또는 업체정보가 없습니다.");
+//        }
         //todo: 클라이언트에서 받아오도록 변경
         UUID hubId = UUID.randomUUID();
         Product product = Product.create(request, hubId);
