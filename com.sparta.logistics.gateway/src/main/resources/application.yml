@@ -41,6 +41,17 @@ spring:
         locator:
           enabled: true  # 서비스 디스커버리를 통해 동적으로 라우트를 생성하도록 설정
 
+  # Authorization Rules
+  config:
+    import:
+      - application-authorization-auth.yml
+      - application-authorization-company.yml
+      - application-authorization-delivery.yml
+      - application-authorization-hub.yml
+      - application-authorization-order.yml
+      - application-authorization-product.yml
+      - application-authorization-notification.yml
+
 eureka:
   client:
     service-url:

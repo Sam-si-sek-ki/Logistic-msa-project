@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -19,14 +20,13 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Component
-public class LocalJwtAuthenticationFilter implements GlobalFilter {
+public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
 
     private final String secretKey;
-
     private final AuthService authService;
 
     // FeignClient 와 Global Filter 의 순환참조 문제가 발생하여 Bean 초기 로딩 시 순환을 막기 위해 @Lazy 어노테이션을 추가함.
-    public LocalJwtAuthenticationFilter(@Value("${service.jwt.secret-key}") String secretKey, @Lazy AuthService authService) {
+    public JwtAuthenticationFilter(@Value("${service.jwt.secret-key}") String secretKey, @Lazy AuthService authService) {
         this.secretKey = secretKey;
         this.authService = authService;
     }
@@ -83,5 +83,11 @@ public class LocalJwtAuthenticationFilter implements GlobalFilter {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    // 인증 필터의 Order 설정 (낮은 값일수록 먼저 실행)
+    @Override
+    public int getOrder() {
+        return -100; // JwtAuthenticationFilter는 JwtAuthorizationFilter보다 먼저 실행
     }
 }
