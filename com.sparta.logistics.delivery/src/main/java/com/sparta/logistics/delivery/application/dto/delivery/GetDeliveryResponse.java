@@ -34,7 +34,7 @@ public class GetDeliveryResponse {
         .detailAddress(delivery.getDeliveryDetailAddress())
         .recipientName(delivery.getRecipientName())
         .slackId(delivery.getSlackId())
-//        .createdAt(delivery.getcreatedAt())
+        .createdAt(delivery.getCreatedAt())
         .build();
   }
 }

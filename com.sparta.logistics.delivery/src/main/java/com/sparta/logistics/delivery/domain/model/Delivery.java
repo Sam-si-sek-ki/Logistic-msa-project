@@ -62,6 +62,19 @@ public class Delivery extends BaseEntity {
     this.deliveryDetailAddress = deliveryDetailAddress;
     this.recipientName = recipientName;
     this.slackId = slackId;
+  }
 
+  public void updateDeliveryInfo(
+      UUID fromHubId,
+      UUID toHubId,
+      String deliveryMainAddress,
+      String deliveryDetailAddress,
+      String recipientName
+  ) {
+    if (fromHubId != null) this.fromHubId = fromHubId;
+    if (toHubId != null) this.toHubId = toHubId;
+    if (deliveryMainAddress != null) this.deliveryMainAddress = deliveryMainAddress;
+    if (deliveryDetailAddress != null) this.deliveryDetailAddress = deliveryDetailAddress;
+    if (recipientName != null) this.recipientName = recipientName;
   }
 }

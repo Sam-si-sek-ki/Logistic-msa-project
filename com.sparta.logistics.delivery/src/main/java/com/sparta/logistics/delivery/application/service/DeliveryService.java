@@ -2,6 +2,8 @@ package com.sparta.logistics.delivery.application.service;
 
 import com.sparta.logistics.delivery.application.dto.delivery.CreateDeliveryRequest;
 import com.sparta.logistics.delivery.application.dto.delivery.CreateDeliveryResponse;
+import com.sparta.logistics.delivery.application.dto.delivery.GetDeliveryResponse;
+import com.sparta.logistics.delivery.application.dto.delivery.UpdateDeliveryRequest;
 import com.sparta.logistics.delivery.application.validation.DeliveryValidation;
 import com.sparta.logistics.delivery.domain.model.Delivery;
 import com.sparta.logistics.delivery.domain.repository.DeliveryRepository;
@@ -9,6 +11,10 @@ import com.sparta.logistics.delivery.infrastructure.client.CompanyServiceClient;
 import com.sparta.logistics.delivery.infrastructure.client.OrderServiceClient;
 import com.sparta.logistics.delivery.infrastructure.client.dto.CompanyClientResponse;
 import com.sparta.logistics.delivery.infrastructure.client.dto.OrderResponseDto;
+import com.sparta.logistics.delivery.libs.exception.ErrorCode;
+import com.sparta.logistics.delivery.libs.exception.GlobalException;
+import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -51,4 +57,24 @@ public class DeliveryService {
     return CreateDeliveryResponse.fromEntity(delivery);
   }
 
+  @Transactional
+  public GetDeliveryResponse updateDelivery(UUID deliveryId, UpdateDeliveryRequest request) {
+
+    Delivery delivery = deliveryRepository.findByDeliveryIdAndDeletedFalse(deliveryId)
+        .orElseThrow(() -> new GlobalException(ErrorCode.DELIVERY_NOT_FOUND));
+
+    deliveryValidation.updateDeliveryValidation(request, delivery);
+
+    request.updateDelivery(delivery);
+
+    return GetDeliveryResponse.fromEntity(delivery);
+  }
+
+  public void deleteDelivery(UUID deliveryId, Long userId) {
+
+    Delivery delivery = deliveryRepository.findByDeliveryIdAndDeletedFalse(deliveryId)
+        .orElseThrow(() -> new GlobalException(ErrorCode.DELIVERY_NOT_FOUND));
+
+    delivery.setDelete(LocalDateTime.now(), userId.toString());
+  }
 }
