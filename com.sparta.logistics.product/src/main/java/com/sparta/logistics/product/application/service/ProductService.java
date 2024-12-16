@@ -59,7 +59,7 @@ public class ProductService {
 
     // 주문 시 상품 존재 여부 확인 및 재고량 감소
     @Transactional
-    public void decreaseStock(UUID productId, int orderQuantity) {
+    public ProductFeignClientResponseDto validateAndDecreaseStock(UUID productId, int orderQuantity) {
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new GlobalException(ErrorCode.PRODUCT_NOT_FOUND));
 
@@ -68,6 +68,8 @@ public class ProductService {
         }
         product.setStockQuantity(product.getStockQuantity() - orderQuantity);
         productRepository.save(product);
+        // 상품 정보 반환
+        return new ProductFeignClientResponseDto(product.getProductId(), product.getProductName());
     }
     // todo : 검색 로직 구현
 }

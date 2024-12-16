@@ -62,12 +62,12 @@ public class ProductController {
     }
 
     // 주문 시 재고량 감소
-    @PostMapping("/{productId}/decrease-stock")
+    @PostMapping("{productId}/validate-and-decrease-stock")
     public ResponseEntity<SuccessResponse<?>> decreaseStock(
         @PathVariable UUID productId,
         @RequestBody @Valid StockRequestDto request
     ) {
-        productService.decreaseStock(productId, request.getOrderQuantity());
+        productService.validateAndDecreaseStock(productId, request.getOrderQuantity());
         return ResponseEntity.ok()
             .body(SuccessResponse.of(ResponseMessage.PRODUCT_STOCK_DECREASE_SUCCESS));
     }
