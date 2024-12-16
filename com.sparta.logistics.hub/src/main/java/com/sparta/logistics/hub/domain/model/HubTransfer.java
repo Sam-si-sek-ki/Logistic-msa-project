@@ -1,5 +1,6 @@
 package com.sparta.logistics.hub.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sparta.logistics.hub.libs.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,10 +23,12 @@ public class HubTransfer extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "from_hub_id", nullable = false)
+    @JsonIgnore
     private Hub fromHub;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "to_hub_id", nullable = false)
+    @JsonIgnore
     private Hub toHub;
 
     private int duration;

@@ -4,13 +4,48 @@ authorization:
       method:
         - GET
       roles:
-        - PUBLIC
         - MASTER_ADMIN
+        - HUB_ADMIN
+        - DELIVERY_USER
+        - COMPANY_USER
+        - PUBLIC
     - path: /hubs/**
       method:
         - POST
-        - PATCH
         - PUT
         - DELETE
       roles:
         - MASTER_ADMIN
+        - HUB_ADMIN
+    - path: /hub-transfers/**
+      method:
+        - GET
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+        - DELIVERY_USER
+        - COMPANY_USER
+        - PUBLIC
+    - path: /hub-transfers/**
+      method:
+        - POST
+        - DELETE
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+    - path: /hub-connection-infos/**
+      method:
+        - GET
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+        - DELIVERY_USER
+        - COMPANY_USER
+        - PUBLIC
+    - path: /hub-connection-infos/**
+      method:
+        - POST
+        - DELETE
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
