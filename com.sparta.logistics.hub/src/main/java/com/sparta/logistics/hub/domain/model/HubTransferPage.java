@@ -3,12 +3,10 @@ package com.sparta.logistics.hub.domain.model;
 import com.sparta.logistics.hub.application.dto.HubTransferResponseDto;
 import com.sparta.logistics.hub.domain.mapper.HubTransferMapper;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.web.PagedModel;
-import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
