@@ -24,6 +24,7 @@ public class OrderController {
 
     private final OrderService orderService;
 
+    // todo : 권한 추가
     @PostMapping
     public ResponseEntity<SuccessResponse<?>> createOrder(
         @RequestBody @Valid OrderRequestDto request) {

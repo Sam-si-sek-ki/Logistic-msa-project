@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -29,10 +30,11 @@ public class Order extends BaseEntity {
     private UUID productId;
 
     @Column(nullable = false)
-    private UUID deliveryId;
-
-    @Column(nullable = false)
     private int orderQuantity;
+
+    @Setter
+    @Column(nullable = false)
+    private UUID deliveryId;
 
     @Column(nullable = false)
     private UUID receiverCompanyId;
@@ -40,19 +42,21 @@ public class Order extends BaseEntity {
     @Column(nullable = false)
     private UUID supplierCompanyId;
 
+    @Column(nullable = false)
+    private String orderRequirements; // 요구사항
 
-    public static Order create(OrderRequestDto request) {
+    private String productName;
+
+    public static Order create(OrderRequestDto request, String productName) {
         return Order.builder()
             .productId(request.getProductId())
             .orderQuantity(request.getOrderQuantity())
+            .productName(productName)
             .build();
     }
 
     public void update(OrderRequestDto request) {
         this.productId = request.getProductId();
         this.orderQuantity = request.getOrderQuantity();
-    }
-    public void setDeliveryId(UUID deliveryId) {
-        this.deliveryId = deliveryId;
     }
 }

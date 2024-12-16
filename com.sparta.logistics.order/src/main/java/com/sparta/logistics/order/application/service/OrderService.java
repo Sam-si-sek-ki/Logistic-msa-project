@@ -1,10 +1,12 @@
 package com.sparta.logistics.order.application.service;
 
+import com.sparta.logistics.order.application.dto.OrderDeliveryRequestDto;
 import com.sparta.logistics.order.domain.model.Order;
 import com.sparta.logistics.order.domain.repository.OrderRepository;
 import com.sparta.logistics.order.infrastructure.clinet.DeliveryServiceClient;
 import com.sparta.logistics.order.infrastructure.clinet.ProductServiceClient;
-import com.sparta.logistics.order.infrastructure.dto.StockDecreaseRequest;
+import com.sparta.logistics.order.infrastructure.dto.CreateDeliveryResponse;
+import com.sparta.logistics.order.infrastructure.dto.ProductResponseDto;
 import com.sparta.logistics.order.libs.exception.ErrorCode;
 import com.sparta.logistics.order.libs.exception.GlobalException;
 import com.sparta.logistics.order.presentation.dto.OrderRequestDto;
@@ -25,18 +27,29 @@ public class OrderService {
 
     @Transactional
     public OrderResponseDto createOrder(@Valid OrderRequestDto request) {
-        //상품 존재여부 확인 + 상품 수량 감소
-        productServiceClient.decreaseStock(
+        // 1. 상품 존재 여부 확인 및 재고 감소 + 상품 이름 반환
+        ProductResponseDto productResponse = productServiceClient.validateAndDecreaseStock(
             request.getProductId(),
-            new StockDecreaseRequest(request.getOrderQuantity())
+            request.getOrderQuantity()
         );
-        // order 생성
-        Order order = Order.create(request);
+        // product name
+        String receiveName = productResponse.getProductName();
+        // 2. 주문 생성
+        Order order = Order.create(request, receiveName);
         Order savedOrder = orderRepository.save(order);
 
-        OrderResponseDto deliveryResponse = deliveryServiceClient.deliverOrder(savedOrder);
+        // 3. 배송 생성 요청 (필요한 데이터만 DTO로 전달)
+        OrderDeliveryRequestDto deliveryRequest = new OrderDeliveryRequestDto(
+            savedOrder.getOrderId(),
+            savedOrder.getOrderQuantity()
+        );
+        CreateDeliveryResponse deliveryResponse = deliveryServiceClient.createDelivery(deliveryRequest);
+
+        // 4. 주문에 배송 ID 설정
         savedOrder.setDeliveryId(deliveryResponse.getDeliveryId());
-        return OrderResponseDto.from(order);
+
+        // 5. 응답 DTO 반환
+        return OrderResponseDto.from(savedOrder);
     }
 
     @Transactional(readOnly = true)

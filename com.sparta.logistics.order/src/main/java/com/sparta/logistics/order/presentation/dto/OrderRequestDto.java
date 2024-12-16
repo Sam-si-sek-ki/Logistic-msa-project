@@ -6,9 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class OrderRequestDto {
-    @NotNull
-    private UUID productId;
-
-    @NotNull
-    private int orderQuantity;
+    @NotNull private UUID productId;
+    @NotNull private int orderQuantity;
+    @NotNull private String orderRequirements;
 }
