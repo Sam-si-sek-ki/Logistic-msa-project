@@ -75,14 +75,34 @@ public class UserService {
 
     // 사용자 목록 조회
     public Page<UserResponse> getUsers(String username, String nickname, String email, String role, String companyId, String hubId,
-            int page, int size, String requesterRole, String requesterUsername) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("username").ascending());
+            int page, int size, String sortField, String sortDirection,
+            String requesterRole, String requesterUsername) {
         UserRole userRole = UserRole.fromAuthority(requesterRole);
 
         // 역할 확인 및 요청 제한
         if (userRole.isRestrictedRole() && (username == null || !username.equals(requesterUsername))) {
             throw new GlobalException(ErrorCode.FORBIDDEN);
         }
+
+        // size 제한: 10, 30, 50만 허용, 그 외는 기본값 10
+        if (size != 10 && size != 30 && size != 50) {
+            size = 10;
+        }
+
+        // 정렬 기본값 설정
+        if (sortField == null || sortField.isEmpty()) {
+            sortField = "updatedAt"; // 기본 정렬 필드
+        }
+        if (sortDirection == null || sortDirection.isEmpty()) {
+            sortDirection = "desc"; // 기본 정렬 방향
+        }
+
+        // 정렬 생성
+        Sort sort = sortDirection.equalsIgnoreCase("asc")
+                ? Sort.by(sortField).ascending()
+                : Sort.by(sortField).descending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
 
         return userRepository.findAllWithFilters(username, nickname, email, role, companyId, hubId, pageable)
                 .map(UserResponse::of);

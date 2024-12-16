@@ -60,9 +60,12 @@ public class UserController {
             @RequestParam(required = false) String hubId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String sortField,
+            @RequestParam(required = false) String sortDirection,
             @RequestHeader("X-Role") String requesterRole,
             @RequestHeader("X-Username") String requesterUsername) {
-        Page<UserResponse> users = userService.getUsers(username, nickname, email, role, companyId, hubId, page, size, requesterRole, requesterUsername);
+        Page<UserResponse> users = userService.getUsers(username, nickname, email, role, companyId, hubId,
+                page, size, sortField, sortDirection, requesterRole, requesterUsername);
         return ResponseEntity.ok().body(SuccessResponse.of(ResponseMessage.USER_READ_SUCCESS, users));
     }
 
