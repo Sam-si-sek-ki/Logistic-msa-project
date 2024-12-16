@@ -9,7 +9,6 @@ import com.sparta.logistics.auth.libs.exception.ErrorCode;
 import com.sparta.logistics.auth.libs.exception.GlobalException;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -74,7 +73,7 @@ public class UserService {
     }
 
     // 사용자 목록 조회
-    public Page<UserResponse> getUsers(String username, String nickname, String email, String role, String companyId, String hubId,
+    public Page<UserResponse> getUsers(String username, String nickname, String email, UserRole role, String companyId, String hubId,
             int page, int size, String sortField, String sortDirection,
             String requesterRole, String requesterUsername) {
         UserRole userRole = UserRole.fromAuthority(requesterRole);

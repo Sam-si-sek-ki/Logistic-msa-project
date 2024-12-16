@@ -2,6 +2,7 @@ package com.sparta.logistics.auth.domain.repository;
 
 import aj.org.objectweb.asm.commons.Remapper;
 import com.sparta.logistics.auth.domain.model.User;
+import com.sparta.logistics.auth.domain.model.UserRole;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -36,7 +37,7 @@ public interface UserRepository {
             @Param("username") String username,
             @Param("nickname") String nickname,
             @Param("email") String email,
-            @Param("role") String role,
+            @Param("role") UserRole role,
             @Param("companyId") String companyId,
             @Param("hubId") String hubId,
             Pageable pageable);
