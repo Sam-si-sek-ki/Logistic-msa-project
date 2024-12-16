@@ -1,10 +1,18 @@
+server:
+  port: 19094
+
 spring:
   application:
     name: hub-service
+  config:
+    import: configserver:http://localhost:19092 # Config Server 주소
+  jpa:
+    properties:
+      hibernate:
+        default_batch_fetch_size: 500
+    open-in-view: false
 
-server:
-  port: 19094
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:19090/eureka/
+      defaultZone: http://localhost:19090/eureka/ # Eureka Server 주소

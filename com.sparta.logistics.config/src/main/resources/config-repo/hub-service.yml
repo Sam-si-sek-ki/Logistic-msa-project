@@ -1,0 +1,15 @@
+server:
+  port: 19094
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:15432/sparta_hub
+    username: sparta_hub
+    password: sparta_hub
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
