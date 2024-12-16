@@ -1,0 +1,16 @@
+authorization:
+  rules:
+    - path: /hubs/**
+      method:
+        - GET
+      roles:
+        - PUBLIC
+        - MASTER_ADMIN
+    - path: /hubs/**
+      method:
+        - POST
+        - PATCH
+        - PUT
+        - DELETE
+      roles:
+        - MASTER_ADMIN
