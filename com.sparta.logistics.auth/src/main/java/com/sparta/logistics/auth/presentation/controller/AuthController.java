@@ -89,4 +89,10 @@ public class AuthController {
         return ResponseEntity.ok(SuccessResponse.of(ResponseMessage.FIELD_VALIDATION_SUCCESS, response));
     }
 
+    // 유저 검증
+    @GetMapping("/validation/username")
+    public ResponseEntity<Boolean> verifyUsername(@RequestParam("username") String username) {
+        return ResponseEntity.ok(userService.isUsernameExists(username));
+    }
+
 }

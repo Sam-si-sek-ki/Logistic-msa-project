@@ -27,7 +27,8 @@ public enum ResponseMessage{
     USER_CREATE_SUCCESS("사용자 등록 성공"),
     VALID_USERNAME("사용 가능한 username 입니다."),
     VALID_EMAIL("사용 가능한 email 입니다."),
-    VALID_SLACKID("사용 가능한 slackId 입니다.")
+    VALID_SLACKID("사용 가능한 slackId 입니다."),
+    GET_USERS_SUCCESS("사용자 조회 성공")
 
     ;
     private final String message;

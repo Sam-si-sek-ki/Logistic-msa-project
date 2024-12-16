@@ -26,6 +26,7 @@ public class WebSecurityConfig {
 
                 .authorizeHttpRequests(requests -> requests // 인증 인가 설정
                         .requestMatchers("/auth/**").permitAll() // 인증 없이 접근 가능
+                        .requestMatchers("/users/**").permitAll() // 인증 없이 접근 가능
                         .anyRequest().authenticated()) // 나머지는 인증 필요
                 .logout(logout -> logout // 로그아웃 설정
                         .logoutSuccessUrl("/login")

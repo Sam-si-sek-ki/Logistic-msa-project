@@ -7,32 +7,17 @@ import com.sparta.logistics.auth.libs.exception.ErrorCode;
 import com.sparta.logistics.auth.libs.exception.GlobalException;
 import com.sparta.logistics.auth.libs.security.JwtUtil;
 import com.sparta.logistics.auth.presentation.dto.SignInRequest;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
-import javax.crypto.SecretKey;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final SecretKey secretKey;
     private final JwtUtil jwtUtil;
-    @Value("${spring.application.name}")
-    private String issuer;
-    @Value("${service.jwt.access-expiration}")
-    private Long accessExpiration;
-
-    public AuthService(UserRepository userRepository, @Value("${service.jwt.secret-key}") String secretKey, PasswordEncoder passwordEncoder,
-            JwtUtil jwtUtil) {
-        this.userRepository = userRepository;
-        this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secretKey));
-        this.passwordEncoder = passwordEncoder;
-        this.jwtUtil = jwtUtil;
-    }
 
     // 로그인
     public AuthResponse login(final SignInRequest request) {
@@ -51,4 +36,5 @@ public class AuthService {
 
         return AuthResponse.of(token);
     }
+
 }
