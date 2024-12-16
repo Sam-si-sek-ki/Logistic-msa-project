@@ -25,7 +25,9 @@ public class ProductService {
         if (!companyAndHubExists) {
             throw new RuntimeException("상품 등록 권한 또는 업체정보가 없습니다.");
         }
-        Product product = Product.create(request);
+        //todo: 클라이언트에서 받아오도록 변경
+        UUID hubId = UUID.randomUUID();
+        Product product = Product.create(request, hubId);
         return productRepository.save(product);
     }
 

@@ -7,15 +7,8 @@ import lombok.Getter;
 @Getter
 public class ProductRequestDto {
 
-    @NotNull
-    private String productName;
-
-    @NotNull
-    private String description;
-
-    @NotNull
-    private int stockQuantity;
-
-    private UUID hubId;
-    private UUID companyId;
+    @NotNull private String productName;
+    @NotNull private String description;
+    @NotNull private int stockQuantity;
+    @NotNull private UUID companyId;
 }
