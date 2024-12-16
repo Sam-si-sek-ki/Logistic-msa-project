@@ -3,11 +3,18 @@ package com.sparta.logistics.auth.application.service;
 import com.sparta.logistics.auth.application.dto.UserRequest;
 import com.sparta.logistics.auth.application.dto.UserResponse;
 import com.sparta.logistics.auth.domain.model.User;
+import com.sparta.logistics.auth.domain.model.UserRole;
 import com.sparta.logistics.auth.domain.repository.UserRepository;
 import com.sparta.logistics.auth.libs.exception.ErrorCode;
 import com.sparta.logistics.auth.libs.exception.GlobalException;
 import jakarta.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -50,13 +57,72 @@ public class UserService {
     }
 
     // 사용자 단건 조회
-    public UserResponse getUserByUsername(String username) {
+    public UserResponse getUserByUsername(String username, String requesterRole, String requesterUsername) {
+        UserRole userRole = UserRole.fromAuthority(requesterRole);
+
         // 사용자 확인
         User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new GlobalException(ErrorCode.USER_NOT_FOUND)
         );
 
+        // 역할 확인 및 요청 제한
+        if (userRole.isRestrictedRole() && !username.equals(requesterUsername)) {
+            throw new GlobalException(ErrorCode.FORBIDDEN);
+        }
+
         return UserResponse.of(user);
+    }
+
+    // 사용자 목록 조회
+    public Page<UserResponse> getUsers(String username, String nickname, String email, String role, String companyId, String hubId,
+            int page, int size, String requesterRole, String requesterUsername) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("username").ascending());
+        UserRole userRole = UserRole.fromAuthority(requesterRole);
+
+        // 역할 확인 및 요청 제한
+        if (userRole.isRestrictedRole() && (username == null || !username.equals(requesterUsername))) {
+            throw new GlobalException(ErrorCode.FORBIDDEN);
+        }
+
+        return userRepository.findAllWithFilters(username, nickname, email, role, companyId, hubId, pageable)
+                .map(UserResponse::of);
+    }
+
+    // 사용자 수정
+    @Transactional
+    public UserResponse updateUser(String username, UserRequest request) {
+        // 사용자 조회
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new GlobalException(ErrorCode.USER_NOT_FOUND)
+        );
+
+        user.update(
+                request.getNickname(),
+                request.getEmail(),
+                request.getPassword() != null ? passwordEncoder.encode(request.getPassword()) : null, // 비밀번호 암호화 후 수정
+                request.getSlackId(),
+                request.getRole(),
+                request.getCompanyId(),
+                request.getHubId()
+        );
+
+        userRepository.save(user);
+        return UserResponse.of(user);
+    }
+
+    // 사용자 삭제
+    @Transactional
+    public void deleteUser(String username, String deletedBy) {
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new GlobalException(ErrorCode.USER_NOT_FOUND)
+        );
+
+        if (user.isDeleted()) {
+            throw new GlobalException(ErrorCode.USER_ALREADY_DELETED);
+        }
+
+        user.setDelete(LocalDateTime.now(), deletedBy);
+        userRepository.save(user);
     }
 
     // Username 존재 여부 확인
