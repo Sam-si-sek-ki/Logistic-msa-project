@@ -1,5 +1,6 @@
 package com.sparta.logistics.delivery.domain.model;
 
+import com.sparta.logistics.delivery.libs.model.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class TransferRoute {
+public class TransferRoute extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
@@ -25,7 +26,7 @@ public class TransferRoute {
   @Column(name = "delivery_id", nullable = false)
   private UUID deliveryId;
 
-  @Column(name = "transfer_route_id", nullable = false)
+  @Column(name = "sequence", nullable = false)
   private Integer sequence;
 
   @Column(name = "from_hub_id", nullable = false, columnDefinition = "uuid")
