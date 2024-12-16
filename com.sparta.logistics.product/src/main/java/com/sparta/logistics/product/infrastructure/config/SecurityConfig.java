@@ -27,7 +27,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Slf4j
 public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
-;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
