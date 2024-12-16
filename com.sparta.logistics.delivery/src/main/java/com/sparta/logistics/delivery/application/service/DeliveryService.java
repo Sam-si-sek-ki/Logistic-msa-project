@@ -7,7 +7,7 @@ import com.sparta.logistics.delivery.application.dto.delivery.UpdateDeliveryRequ
 import com.sparta.logistics.delivery.application.validation.DeliveryValidation;
 import com.sparta.logistics.delivery.domain.model.Delivery;
 import com.sparta.logistics.delivery.domain.model.DeliveryStatus;
-import com.sparta.logistics.delivery.domain.repository.DeliveryRepository;
+import com.sparta.logistics.delivery.domain.repository.delivery.DeliveryRepository;
 import com.sparta.logistics.delivery.infrastructure.client.CompanyServiceClient;
 import com.sparta.logistics.delivery.infrastructure.client.dto.CompanyClientResponse;
 import com.sparta.logistics.delivery.infrastructure.client.dto.OrderResponseDto;

@@ -1,4 +1,4 @@
-package com.sparta.logistics.delivery.domain.repository;
+package com.sparta.logistics.delivery.domain.repository.delivery;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.logistics.delivery.domain.model.Delivery;
