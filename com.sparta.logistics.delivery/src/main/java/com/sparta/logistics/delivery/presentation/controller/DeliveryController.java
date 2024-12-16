@@ -1,8 +1,6 @@
 package com.sparta.logistics.delivery.presentation.controller;
 
 import com.sparta.logistics.delivery.application.dto.delivery.CreateDeliveryResponse;
-import com.sparta.logistics.delivery.application.dto.delivery.DeliverySearchCondition;
-import com.sparta.logistics.delivery.application.dto.delivery.DeliverySearchResponse;
 import com.sparta.logistics.delivery.application.dto.delivery.GetDeliveryResponse;
 import com.sparta.logistics.delivery.application.dto.delivery.UpdateDeliveryRequest;
 import com.sparta.logistics.delivery.application.service.DeliveryService;
@@ -12,13 +10,9 @@ import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;

@@ -9,7 +9,6 @@ import com.sparta.logistics.delivery.domain.model.Delivery;
 import com.sparta.logistics.delivery.domain.model.DeliveryStatus;
 import com.sparta.logistics.delivery.domain.repository.DeliveryRepository;
 import com.sparta.logistics.delivery.infrastructure.client.CompanyServiceClient;
-import com.sparta.logistics.delivery.infrastructure.client.OrderServiceClient;
 import com.sparta.logistics.delivery.infrastructure.client.dto.CompanyClientResponse;
 import com.sparta.logistics.delivery.infrastructure.client.dto.OrderResponseDto;
 import com.sparta.logistics.delivery.libs.exception.ErrorCode;
@@ -30,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class DeliveryService {
 
   private final DeliveryRepository deliveryRepository;
-  private final OrderServiceClient orderServiceClient;
   private final CompanyServiceClient companyServiceClient;
   private final DeliveryValidation deliveryValidation;
 
