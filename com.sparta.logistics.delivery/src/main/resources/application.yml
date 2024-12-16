@@ -1,6 +1,8 @@
 spring:
   application:
     name: delivery-service
+  config:
+    import: configserver:http://localhost:19092   # Config Server 주소
 
 server:
   port: 19096
@@ -8,3 +10,8 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:19090/eureka/
+
+logging:
+  level:
+    feign: DEBUG
+    feign.Logger: DEBUG

@@ -25,3 +25,8 @@ replay_pid*
 
 # IDE
 .idea/
+
+# Data
+infra/*data
+
+.DS_Store
