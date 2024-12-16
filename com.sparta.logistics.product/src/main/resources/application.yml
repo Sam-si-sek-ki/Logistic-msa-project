@@ -1,7 +1,8 @@
 spring:
   application:
     name: product-service
-
+  config:
+    import: configserver:http://localhost:19092 # Config Server 주소
   datasource:
     url: jdbc:postgresql://localhost:15432/sparta_product
     username: postgres
