@@ -33,7 +33,7 @@ public class Driver extends BaseEntity {
   @Column(name = "drive_type", nullable = false)
   private DriverType driverType;
 
-  @Column(name = "sequence", nullable = false)
+  @Column(name = "sequence")
   private Integer sequence;
 
   @Builder
