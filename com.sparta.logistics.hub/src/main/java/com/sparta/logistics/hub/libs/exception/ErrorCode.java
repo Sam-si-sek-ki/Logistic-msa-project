@@ -19,6 +19,8 @@ public enum ErrorCode {
     // domain
     HUB_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 허브를 찾을 수 없습니다."),
 
+    HUB_TRANSFER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 허브이동정보 를 찾을 수 없습니다."),
+
 
     /**
      * 사용 예

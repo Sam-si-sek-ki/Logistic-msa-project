@@ -22,6 +22,13 @@ public enum ResponseMessage{
     // domain
     HUB_SELECT_SUCCESS("허브 조회 성공"),
     HUB_CREATE_SUCCESS("허브 등록 성공"),
+    HUB_UPDATE_SUCCESS("허브 등록 성공"),
+    HUB_DELETE_SUCCESS("허브 등록 성공"),
+
+    HUB_TRANSFER_SELECT_SUCCESS("허브이동관리 조회 성공"),
+    HUB_TRANSFER_CREATE_SUCCESS("허브이동관리 생성 성공"),
+    HUB_TRANSFER_UPDATE_SUCCESS("허브이동관리 수정 성공"),
+    HUB_TRANSFER_DELETE_SUCCESS("허브이동관리 삭제 성공"),
 
     ;
     private final String message;
