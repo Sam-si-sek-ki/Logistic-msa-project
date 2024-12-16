@@ -8,8 +8,8 @@ import com.sparta.logistics.auth.libs.exception.ErrorCode;
 import com.sparta.logistics.auth.libs.model.ErrorResponse;
 import com.sparta.logistics.auth.libs.model.ResponseMessage;
 import com.sparta.logistics.auth.libs.model.SuccessResponse;
-import com.sparta.logistics.auth.presentation.dto.CreateUserRequest;
 import com.sparta.logistics.auth.presentation.dto.SignInRequest;
+import com.sparta.logistics.auth.presentation.dto.SignUpRequest;
 import com.sparta.logistics.auth.presentation.dto.ValidateResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -33,12 +33,12 @@ public class AuthController {
     // 로그인
     @PostMapping("/signin")
     public ResponseEntity<SuccessResponse<AuthResponse>> signIn(@RequestBody @Valid SignInRequest request) {
-        return ResponseEntity.ok().body(SuccessResponse.of(ResponseMessage.LOGIN_SUCCESS, authService.createAccessToken(request)));
+        return ResponseEntity.ok().body(SuccessResponse.of(ResponseMessage.LOGIN_SUCCESS, authService.login(request)));
     }
 
     // 회원 가입
     @PostMapping("/signup")
-    public ResponseEntity<SuccessResponse<UserResponse>> signUp(@RequestBody @Valid CreateUserRequest request) {
+    public ResponseEntity<SuccessResponse<UserResponse>> signUp(@RequestBody @Valid SignUpRequest request) {
         return ResponseEntity.ok().body(SuccessResponse.of(ResponseMessage.USER_CREATE_SUCCESS, userService.createUser(request.toDTO())));
     }
 
@@ -87,6 +87,12 @@ public class AuthController {
                 .build();
 
         return ResponseEntity.ok(SuccessResponse.of(ResponseMessage.FIELD_VALIDATION_SUCCESS, response));
+    }
+
+    // 유저 검증
+    @GetMapping("/validation/username")
+    public ResponseEntity<Boolean> verifyUsername(@RequestParam("username") String username) {
+        return ResponseEntity.ok(userService.isUsernameExists(username));
     }
 
 }

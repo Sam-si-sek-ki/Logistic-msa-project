@@ -49,6 +49,16 @@ public class UserService {
         return UserResponse.of(user);
     }
 
+    // 사용자 단건 조회
+    public UserResponse getUserByUsername(String username) {
+        // 사용자 확인
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new GlobalException(ErrorCode.USER_NOT_FOUND)
+        );
+
+        return UserResponse.of(user);
+    }
+
     // Username 존재 여부 확인
     public Boolean isUsernameExists(String username) {
         // username 으로 User 를 조회 후 isPresent() 로 존재유무를 리턴함
@@ -63,7 +73,8 @@ public class UserService {
 
     // SlackId 유효성 검사
     public Boolean isSlackIdValid(String slackId) {
-        // TODO : Slack ID 유효성 검사 구현
+        // TODO : Slack ID 유효성 검사
         return true;
     }
+
 }
