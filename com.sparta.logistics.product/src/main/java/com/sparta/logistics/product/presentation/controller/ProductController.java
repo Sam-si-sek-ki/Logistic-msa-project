@@ -9,8 +9,8 @@ import com.sparta.logistics.product.presentation.dto.ProductRequestDto;
 import jakarta.validation.Valid;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,21 +24,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/products")
-@DynamicUpdate
 public class ProductController {
 
     private final ProductService productService;
 
     @PostMapping
-//    @PreAuthorize("hasRole('MASTER_ADMIN') or (hasRole('HUB_ADMIN')) or (hasRole('COMPANY_USER'))")
+    @PreAuthorize("hasRole('MASTER_ADMIN') or (hasRole('HUB_ADMIN')) or (hasRole('COMPANY_USER'))")
     public ResponseEntity<SuccessResponse<Product>> createProduct(
         @RequestBody @Valid ProductRequestDto request,
-        @RequestHeader(value = "X-USER-NAME", required = false) String userName,
-        @RequestHeader(value = "X-USER-ROLE", required = false) String userRole) {
-
-        // test 사용자 정보
-        userName = "testUser";
-        userRole = "test_manager";
+        @RequestHeader(value = "X-Username") String userName,
+        @RequestHeader(value = "X-Role") String userRole) {
         return ResponseEntity.ok().body(
             SuccessResponse.of(ResponseMessage.PRODUCT_CREATE_SUCCESS,
                 productService.createProduct(request, userName, userRole)));
@@ -52,7 +47,7 @@ public class ProductController {
     }
 
     @PutMapping("/{productId}")
-//    @PreAuthorize("hasRole('MASTER_ADMIN') or (hasRole('HUB_ADMIN')) or (hasRole('COMPANY_USER'))")
+    @PreAuthorize("hasRole('MASTER_ADMIN') or (hasRole('HUB_ADMIN')) or (hasRole('COMPANY_USER'))")
     public ResponseEntity<SuccessResponse<?>> updateProduct(@PathVariable UUID productId,
         @RequestBody ProductRequestDto request) {
         return ResponseEntity.ok().body(SuccessResponse.of(ResponseMessage.PRODUCT_UPDATE_SUCCESS,
@@ -60,7 +55,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{productId}")
-//    @PreAuthorize("hasRole('MASTER_ADMIN') or (hasRole('HUB_ADMIN'))")
+    @PreAuthorize("hasRole('MASTER_ADMIN') or (hasRole('HUB_ADMIN'))")
     public ResponseEntity<SuccessResponse<?>> deleteProduct(@PathVariable UUID productId) {
         productService.softDeleteProduct(productId);
         return ResponseEntity.ok().body(SuccessResponse.of(ResponseMessage.PRODUCT_DELETE_SUCCESS));
