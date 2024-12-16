@@ -1,6 +1,8 @@
 spring:
   application:
     name: delivery-service
+  config:
+    import: configserver:http://localhost:19092   # Config Server 주소
 
 server:
   port: 19096

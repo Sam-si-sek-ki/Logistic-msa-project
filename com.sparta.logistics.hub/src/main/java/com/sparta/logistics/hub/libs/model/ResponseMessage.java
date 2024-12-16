@@ -20,6 +20,7 @@ public enum ResponseMessage{
      */
 
     // domain
+    HUB_SELECT_SUCCESS("허브 조회 성공"),
     HUB_CREATE_SUCCESS("허브 등록 성공"),
 
     ;
