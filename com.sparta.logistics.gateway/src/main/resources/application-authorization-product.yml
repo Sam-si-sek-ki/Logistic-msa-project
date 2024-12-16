@@ -1,0 +1,18 @@
+authorization:
+  rules:
+    - path: /products/**
+      method:
+        - GET
+        - POST
+        - PATCH
+        - PUT
+        - DELETE
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+        - COMPANY_USER
+    - path: /products
+      method:
+        - GET
+      roles:
+        - DELIVERY_USER
