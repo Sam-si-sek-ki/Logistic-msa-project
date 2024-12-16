@@ -2,6 +2,7 @@ package com.sparta.logistics.product.application.service;
 
 import com.sparta.logistics.product.domain.model.Product;
 import com.sparta.logistics.product.domain.repository.ProductRepository;
+import com.sparta.logistics.product.infrastructure.client.CompanyFeignClient;
 import com.sparta.logistics.product.libs.exception.ErrorCode;
 import com.sparta.logistics.product.libs.exception.GlobalException;
 import com.sparta.logistics.product.presentation.dto.ProductRequestDto;
@@ -16,16 +17,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductService {
 
     private final ProductRepository productRepository;
-
+    private final CompanyFeignClient companyFeignClient;
     @Transactional
-    public Product createProduct(ProductRequestDto request) {
-    // todo : 사용자 인증 및 권한 확인
+    public Product createProduct(ProductRequestDto request, Long user, String userRole) {
+        boolean companyExists = companyFeignClient.isCompanyExist(request.getCompanyId());
+        if (!companyExists) {
+            throw new RuntimeException("업체가 존재하지 않습니다.");
+        }
+
         Product product = Product.create(request);
         return productRepository.save(product);
     }
 
     @Transactional(readOnly = true)
-    public ProductResponseDto getProduct(UUID productId) {
+    public ProductResponseDto getProductById(UUID productId) {
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new GlobalException(ErrorCode.PRODUCT_NOT_FOUND));
         return ProductResponseDto.from(product);
@@ -61,4 +66,5 @@ public class ProductService {
         product.setStockQuantity(product.getStockQuantity() - orderQuantity);
         productRepository.save(product);
     }
+    // todo : 검색 로직 구현
 }

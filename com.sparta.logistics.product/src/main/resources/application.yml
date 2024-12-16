@@ -23,11 +23,11 @@ logging:
 server:
   port: 19098
 
-# todo : 추후 eureka 서버 가동 시 사용하기
-#eureka:
-#  client:
-#    service-url:
-#      defaultZone: http://localhost:19090/eureka/
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:19090/eureka/
 ---
 # todo : 추후 config 서버 가동 시 삭제하기
 spring:
