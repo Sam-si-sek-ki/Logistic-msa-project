@@ -4,7 +4,7 @@ import com.sparta.logistics.auth.application.dto.UserResponse;
 import com.sparta.logistics.auth.application.service.UserService;
 import com.sparta.logistics.auth.libs.model.ResponseMessage;
 import com.sparta.logistics.auth.libs.model.SuccessResponse;
-import com.sparta.logistics.auth.presentation.dto.CreateUserRequest;
+import com.sparta.logistics.auth.presentation.dto.SignUpRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ public class UserController {
 
     // 사용자 등록
     @PostMapping
-    public ResponseEntity<SuccessResponse<UserResponse>> createUser(@RequestBody @Valid CreateUserRequest request) {
+    public ResponseEntity<SuccessResponse<UserResponse>> createUser(@RequestBody @Valid SignUpRequest request) {
         return ResponseEntity.ok().body(SuccessResponse.of(ResponseMessage.USER_CREATE_SUCCESS, userService.createUser(request.toDTO())));
     }
 

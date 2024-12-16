@@ -12,7 +12,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateUserRequest {
+public class SignUpRequest {
 
     @NotNull
     @Pattern(regexp = "^[a-z0-9]{4,10}$", message = "username은 소문자와 숫자로 구성된 4자 이상, 10자 이하여야 합니다.")
@@ -34,7 +34,7 @@ public class CreateUserRequest {
     )
     private String password;
 
-    // TODO : slackId 유효성 검사
+    @Email(message = "유효한 이메일 형식이어야 합니다.")
     private String slackId;
 
     @NotNull(message = "role은 필수입니다.")

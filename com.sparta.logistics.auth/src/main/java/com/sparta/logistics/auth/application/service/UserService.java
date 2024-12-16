@@ -63,7 +63,7 @@ public class UserService {
 
     // SlackId 유효성 검사
     public Boolean isSlackIdValid(String slackId) {
-        // TODO : Slack ID 유효성 검사 구현
+        // TODO : Slack ID 유효성 검사
         return true;
     }
 }
