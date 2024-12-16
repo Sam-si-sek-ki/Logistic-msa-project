@@ -2,12 +2,11 @@ package com.sparta.logistics.product;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 
 @SpringBootApplication
-
-// todo: 추후 실행
-//@EnableFeignClients
+@EnableFeignClients
 public class ProductApplication {
 
 	public static void main(String[] args) {

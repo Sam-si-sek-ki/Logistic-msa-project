@@ -22,7 +22,8 @@ public enum ResponseMessage{
     PRODUCT_CREATE_SUCCESS("상품 등록 성공"),
     PRODUCT_GET_SUCCESS("상품 조회 성공"),
     PRODUCT_UPDATE_SUCCESS("상품 수정 성공"),
-    PRODUCT_DELETE_SUCCESS("상품 삭제 성공");
+    PRODUCT_DELETE_SUCCESS("상품 삭제 성공"),
+    PRODUCT_STOCK_DECREASE_SUCCESS("상품 재고량 감소 성공");
 
     private final String message;
 }

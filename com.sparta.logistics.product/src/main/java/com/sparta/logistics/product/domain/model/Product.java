@@ -1,5 +1,6 @@
 package com.sparta.logistics.product.domain.model;
 
+import com.sparta.logistics.product.libs.model.BaseEntity;
 import com.sparta.logistics.product.presentation.dto.ProductRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,7 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import com.sparta.logistics.product.libs.model.BaseEntity;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -29,25 +30,26 @@ public class Product extends BaseEntity {
     @Column(nullable = false)
     private String productName;
 
+    @Setter
     @Column(nullable = false)
     private int stockQuantity;
 
     @Column(nullable = false)
     private String description;
 
-//    @Column(nullable = false)
-//    private UUID hubId;
-//
-//    @Column(nullable = false)
-//    private UUID companyId;
+    @Column(nullable = false)
+    private UUID hubId;
 
-    public static Product create(ProductRequestDto request) {
+    @Column(nullable = false)
+    private UUID companyId;
+
+    public static Product create(ProductRequestDto request, UUID hubId) {
         return Product.builder()
             .productName(request.getProductName())
             .stockQuantity(request.getStockQuantity())
             .description(request.getDescription())
-//            .hubId(request.getHubId())
-//            .companyId(request.getCompanyId())
+            .hubId(hubId)
+            .companyId(request.getCompanyId())
             .build();
     }
 
@@ -56,4 +58,5 @@ public class Product extends BaseEntity {
         this.stockQuantity = request.getStockQuantity();
         this.description = request.getDescription();
     }
+
 }
