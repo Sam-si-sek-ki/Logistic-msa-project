@@ -31,14 +31,13 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    @PreAuthorize("hasRole('MASTER_ADMIN') or (hasRole('HUB_ADMIN') and #hubId != null) or (hasRole('COMPANY_USER') and #companyId != null)")
     public ResponseEntity<SuccessResponse<Product>> createProduct(
         @RequestBody @Valid ProductRequestDto request,
-        @RequestHeader("X-USER") Long userId,
+        @RequestHeader("X-USER-NAME") String userName,
         @RequestHeader("X-USER-ROLE") String userRole) {
         return ResponseEntity.ok().body(
             SuccessResponse.of(ResponseMessage.PRODUCT_CREATE_SUCCESS,
-                productService.createProduct(request, userId, userRole)));
+                productService.createProduct(request, userName, userRole)));
     }
     //단건 조회
     @GetMapping("/{productId}")
@@ -47,14 +46,9 @@ public class ProductController {
             SuccessResponse.of(ResponseMessage.PRODUCT_GET_SUCCESS,
                 productService.getProductById(productId)));
     }
-    // search
-//    @GetMapping
-//    public Page<ProductResponseDto> getProducts(ProductSearchDto searchDto, Pageable pageable) {
-//        return productService.getProducts(searchDto, pageable);
-//    }
 
     @PutMapping("/{productId}")
-    @PreAuthorize("hasRole('MASTER_ADMIN') or (hasRole('HUB_ADMIN') and #hubId != null) or (hasRole('COMPANY_USER') and #companyId != null)")
+    @PreAuthorize("hasRole('MASTER_ADMIN') or (hasRole('HUB_ADMIN')) or (hasRole('COMPANY_USER'))")
     public ResponseEntity<SuccessResponse<?>> updateProduct(@PathVariable UUID productId,
         @RequestBody ProductRequestDto request) {
         return ResponseEntity.ok().body(SuccessResponse.of(ResponseMessage.PRODUCT_UPDATE_SUCCESS,
@@ -62,7 +56,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{productId}")
-    @PreAuthorize("hasRole('MASTER_ADMIN') or (hasRole('HUB_ADMIN') and #hubId != null)")
+    @PreAuthorize("hasRole('MASTER_ADMIN') or (hasRole('HUB_ADMIN'))")
     public ResponseEntity<SuccessResponse<?>> deleteProduct(@PathVariable UUID productId) {
         productService.softDeleteProduct(productId);
         return ResponseEntity.ok().body(SuccessResponse.of(ResponseMessage.PRODUCT_DELETE_SUCCESS));
@@ -78,10 +72,4 @@ public class ProductController {
         return ResponseEntity.ok()
             .body(SuccessResponse.of(ResponseMessage.PRODUCT_STOCK_DECREASE_SUCCESS));
     }
-
-    @PostMapping("/{productId}/update-stock")
-    public ResponseEntity<SuccessResponse<?>> updateStock(
-        @PathVariable UUID productId,
-        @RequestBody @Valid StockRequestDto request
-    )
 }

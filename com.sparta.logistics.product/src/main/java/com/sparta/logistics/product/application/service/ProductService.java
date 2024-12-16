@@ -19,12 +19,12 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final CompanyFeignClient companyFeignClient;
     @Transactional
-    public Product createProduct(ProductRequestDto request, Long user, String userRole) {
-        boolean companyExists = companyFeignClient.isCompanyExist(request.getCompanyId());
-        if (!companyExists) {
-            throw new RuntimeException("업체가 존재하지 않습니다.");
-        }
+    public Product createProduct(ProductRequestDto request, String userName, String userRole) {
 
+        boolean companyAndHubExists = companyFeignClient.isCompanyExist(request.getCompanyId(), userName, userRole);
+        if (!companyAndHubExists) {
+            throw new RuntimeException("상품 등록 권한 또는 업체정보가 없습니다.");
+        }
         Product product = Product.create(request);
         return productRepository.save(product);
     }
@@ -50,6 +50,7 @@ public class ProductService {
         // todo : 권한 + 유저확인 후 로직 실행되도록 변경 
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new GlobalException(ErrorCode.PRODUCT_NOT_FOUND));
+
         // todo : 게이트웨이로 부터 정보를 받아오면 수정하기
         // product.setDelete();
     }
