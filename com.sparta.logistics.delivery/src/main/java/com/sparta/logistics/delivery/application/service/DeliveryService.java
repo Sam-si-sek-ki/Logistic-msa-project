@@ -6,6 +6,7 @@ import com.sparta.logistics.delivery.application.dto.delivery.GetDeliveryRespons
 import com.sparta.logistics.delivery.application.dto.delivery.UpdateDeliveryRequest;
 import com.sparta.logistics.delivery.application.validation.DeliveryValidation;
 import com.sparta.logistics.delivery.domain.model.Delivery;
+import com.sparta.logistics.delivery.domain.model.DeliveryStatus;
 import com.sparta.logistics.delivery.domain.repository.DeliveryRepository;
 import com.sparta.logistics.delivery.infrastructure.client.CompanyServiceClient;
 import com.sparta.logistics.delivery.infrastructure.client.OrderServiceClient;
@@ -14,7 +15,10 @@ import com.sparta.logistics.delivery.infrastructure.client.dto.OrderResponseDto;
 import com.sparta.logistics.delivery.libs.exception.ErrorCode;
 import com.sparta.logistics.delivery.libs.exception.GlobalException;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -60,7 +64,7 @@ public class DeliveryService {
   @Transactional
   public GetDeliveryResponse updateDelivery(UUID deliveryId, UpdateDeliveryRequest request) {
 
-    Delivery delivery = deliveryRepository.findByDeliveryIdAndDeletedFalse(deliveryId)
+    Delivery delivery = deliveryRepository.findByDeliveryId(deliveryId)
         .orElseThrow(() -> new GlobalException(ErrorCode.DELIVERY_NOT_FOUND));
 
     deliveryValidation.updateDeliveryValidation(request, delivery);
@@ -72,9 +76,26 @@ public class DeliveryService {
 
   public void deleteDelivery(UUID deliveryId, Long userId) {
 
-    Delivery delivery = deliveryRepository.findByDeliveryIdAndDeletedFalse(deliveryId)
+    Delivery delivery = deliveryRepository.findByDeliveryId(deliveryId)
         .orElseThrow(() -> new GlobalException(ErrorCode.DELIVERY_NOT_FOUND));
 
     delivery.setDelete(LocalDateTime.now(), userId.toString());
+  }
+
+  public GetDeliveryResponse getDelivery(UUID deliveryId) {
+
+    Delivery delivery = deliveryRepository.findByDeliveryId(deliveryId)
+        .orElseThrow(() -> new GlobalException(ErrorCode.DELIVERY_NOT_FOUND));
+
+    return GetDeliveryResponse.fromEntity(delivery);
+  }
+
+  public List<GetDeliveryResponse> findDeliveries(DeliveryStatus status) {
+    if (status == null) {
+      return Collections.emptyList(); // 또는 전체 조회 로직
+    }
+    return deliveryRepository.findByStatus(status).stream()
+        .map(GetDeliveryResponse::fromEntity)
+        .collect(Collectors.toList());
   }
 }
