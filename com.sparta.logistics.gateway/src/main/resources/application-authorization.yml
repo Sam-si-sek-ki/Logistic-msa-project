@@ -1,0 +1,127 @@
+authorization:
+  rules:
+    ###### Auth ######
+    - path: /auth/**
+      method:
+        - GET
+        - POST
+      roles:
+        - PUBLIC
+    - path: /users/**
+      method:
+        - GET
+        - POST
+        - PATCH
+        - PUT
+        - DELETE
+      roles:
+        - MASTER_ADMIN
+    - path: /users
+      method:
+        - GET
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+        - DELIVERY_USER
+        - COMPANY_USER
+    - path: /users/*
+      method:
+        - GET
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+        - DELIVERY_USER
+        - COMPANY_USER
+
+    ###### Hub ######
+    - path: /hubs/**
+      method:
+        - GET
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+        - DELIVERY_USER
+        - COMPANY_USER
+        - PUBLIC
+    - path: /hubs/**
+      method:
+        - POST
+        - PUT
+        - DELETE
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+    - path: /hub-transfers/**
+      method:
+        - GET
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+        - DELIVERY_USER
+        - COMPANY_USER
+        - PUBLIC
+    - path: /hub-transfers/**
+      method:
+        - POST
+        - DELETE
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+    - path: /hub-connection-infos/**
+      method:
+        - GET
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+        - DELIVERY_USER
+        - COMPANY_USER
+        - PUBLIC
+    - path: /hub-connection-infos/**
+      method:
+        - POST
+        - DELETE
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+
+    ###### Order ######
+    - path: /orders/**
+      method:
+        - GET
+        - POST
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+        - COMPANY_USER
+    - path: /orders
+      method:
+        - GET
+        - POST
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+        - COMPANY_USER
+
+    ###### Product ######
+    - path: /products/**
+      method:
+        - GET
+        - POST
+        - PATCH
+        - PUT
+        - DELETE
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+        - COMPANY_USER
+    - path: /products
+      method:
+        - GET
+      roles:
+        - DELIVERY_USER
+
+    ###### Company ######
+
+    ###### Delivery ######
+
+    ###### Notification ######

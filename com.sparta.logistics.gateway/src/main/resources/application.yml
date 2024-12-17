@@ -44,13 +44,7 @@ spring:
   # Authorization Rules
   config:
     import:
-      - application-authorization-auth.yml
-      - application-authorization-company.yml
-      - application-authorization-delivery.yml
-      - application-authorization-hub.yml
-      - application-authorization-order.yml
-      - application-authorization-product.yml
-      - application-authorization-notification.yml
+      - application-authorization.yml
 
 eureka:
   client:

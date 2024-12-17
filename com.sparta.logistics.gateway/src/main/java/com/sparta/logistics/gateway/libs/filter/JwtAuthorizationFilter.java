@@ -88,7 +88,11 @@ public class JwtAuthorizationFilter implements GlobalFilter, Ordered {
             return false;
         }
 
+        log.warn("=== isAuthorized: path: {} with method: {} on userRole: {}", path, method, userRole);
         for (AuthorizationRulesConfig.Rule rule : rules) {
+            log.info("rule.getPath().: {}", rule.getPath());
+            log.info("rule.getMethod().: {}", rule.getPath());
+            log.info("rule.getRoles().: {}", rule.getPath());
             if (pathMatcher.match(rule.getPath(), path) &&
                     rule.getMethod().contains(method) &&
                     rule.getRoles().contains(userRole)) {
