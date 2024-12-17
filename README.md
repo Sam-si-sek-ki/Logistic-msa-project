@@ -92,7 +92,53 @@
 
 ## 🌐 Architecture
 
+## Structure
+logistics.msa
+├── gateway-service            // API Gateway, 라우팅
+│   └── [presentation/application/domain/infrastructure]
+│
+├── auth-service              // 인증/인가
+│   └── [presentation/application/domain/infrastructure]
+│
+├── config-service           // 설정 관리
+│   └── [presentation/application/domain/infrastructure]
+│
+├── order-service           // 주문 관리
+│   └── [presentation/application/domain/infrastructure]
+│
+├── product-service         // 상품 관리
+│   └── [presentation/application/domain/infrastructure]
+│
+├── company-service         // 회사 정보
+│   └── [presentation/application/domain/infrastructure]
+│
+├── delivery-service        // 배송 처리
+│   └── [presentation/application/domain/infrastructure]
+│
+├── driver-service         // 기사 관리
+│   └── [presentation/application/domain/infrastructure]
+│
+├── hub-service           // 물류 허브
+│   └── [presentation/application/domain/infrastructure]
+│
+├── notification-service  // 알림
+│   └── [presentation/application/domain/infrastructure]
+│
+└── server-service       // 서버 관리
+    └── [presentation/application/domain/infrastructure]
 
+// 각 서비스 공통 구조
+[service-name]
+├── presentation        // API 요청 처리
+│   └── controller
+├── application        // 비즈니스 로직
+│   ├── service
+│   └── dto
+├── domain            // 핵심 도메인
+│   ├── model
+│   └── repository
+└── infrastructure    // 외부 시스템 연동
+    └── client
 
 <br>
 
