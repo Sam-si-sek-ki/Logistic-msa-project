@@ -33,7 +33,8 @@ public class OrderService {
     private final CompanyServiceClient companyServiceClient;
 
     @Transactional
-    public OrderResponseDto createOrder(@Valid OrderRequestDto request) {
+    public OrderResponseDto createOrder(@Valid OrderRequestDto request, String username,
+        String role) {
         // 1. 상품 존재 여부 확인 및 재고 감소 + 상품 이름 반환
         ProductResponseDto productResponse = productServiceClient.validateAndDecreaseStock(
             request.getProductId(),
@@ -44,12 +45,14 @@ public class OrderService {
         log.info("==== Received order request with name {}", receiveName);
 
         //두 회사 ID가 유효한지 확인
-        ResponseEntity<Void> response = companyServiceClient.checkCompaniesExist(
-            request.getSupplierCompanyId(),
+        ResponseEntity<Void> recComp = companyServiceClient.receiverCompanyExist(
             request.getReceiverCompanyId()
         );
+        ResponseEntity<Void> supComp = companyServiceClient.supplierCompanyExist(
+            request.getSupplierCompanyId()
+        );
 
-        if (response.getStatusCode() != HttpStatus.OK) {
+        if (recComp.getStatusCode() != HttpStatus.OK && supComp.getStatusCode() != HttpStatus.OK) {
             // 회사가 유효하지 않은 경우 예외 처리 또는 에러 반환
             throw new GlobalException(ErrorCode.INTERNAL_SERVER_ERROR);
         }
@@ -61,10 +64,15 @@ public class OrderService {
         // 3. 배송 생성 요청 (배송 정보를 포함하는 DTO를 전달)
         OrderDeliveryRequestDto deliveryRequest = new OrderDeliveryRequestDto(
             savedOrder.getOrderId(),
-            savedOrder.getOrderQuantity()
+            savedOrder.getOrderQuantity(),
+            savedOrder.getReceiverCompanyId(),
+            savedOrder.getSupplierCompanyId()
         );
         CreateDeliveryResponse deliveryResponse = deliveryServiceClient.createDelivery(
-            deliveryRequest);
+            deliveryRequest,
+            username,
+            role
+        );
 
         // 4. 주문에 배송 ID 설정
         savedOrder.setDeliveryId(deliveryResponse.getDeliveryId());

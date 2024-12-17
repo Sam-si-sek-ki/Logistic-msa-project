@@ -31,17 +31,19 @@ public class DeliveryController {
 
   @PostMapping
   public ResponseEntity<CreateDeliveryResponse> createDelivery(
-      @RequestBody OrderResponseDto orderResponseDto) {
-    CreateDeliveryResponse response = deliveryService.createDelivery(orderResponseDto);
+      @RequestBody OrderResponseDto orderResponseDto,
+      @RequestHeader("X-Role") String role,
+      @RequestHeader("X-Username") String username) {
+    CreateDeliveryResponse response = deliveryService.createDelivery(orderResponseDto,username,role);
     return ResponseEntity.ok(response);
   }
 
-  @PostMapping("/test")
-  public ResponseEntity<CreateDeliveryResponse> createDeliveryTest(
-      @RequestBody OrderResponseDto orderResponseDto
-  ) {
-    return ResponseEntity.ok(deliveryService.createDelivery(orderResponseDto));
-  }
+//  @PostMapping("/test")
+//  public ResponseEntity<CreateDeliveryResponse> createDeliveryTest(
+//      @RequestBody OrderResponseDto orderResponseDto
+//  ) {
+//    return ResponseEntity.ok(deliveryService.createDelivery(orderResponseDto));
+//  }
 
 
   @PutMapping("/{deliveryId}")

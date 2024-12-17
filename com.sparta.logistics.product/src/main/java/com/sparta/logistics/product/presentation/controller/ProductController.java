@@ -5,6 +5,7 @@ import com.sparta.logistics.product.domain.model.Product;
 import com.sparta.logistics.product.libs.model.ResponseMessage;
 import com.sparta.logistics.product.libs.model.SuccessResponse;
 import com.sparta.logistics.product.presentation.dto.ProductRequestDto;
+import com.sparta.logistics.product.presentation.dto.ProductResponseDto;
 import jakarta.validation.Valid;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,7 @@ public class ProductController {
             SuccessResponse.of(ResponseMessage.PRODUCT_CREATE_SUCCESS,
                 productService.createProduct(request)));
     }
+
     //단건 조회
     @GetMapping("/{productId}")
     public ResponseEntity<SuccessResponse<?>> getProductById(@PathVariable UUID productId) {
@@ -65,8 +67,8 @@ public class ProductController {
         @PathVariable UUID productId,
         @RequestBody int orderQuantity
     ) {
-        productService.validateAndDecreaseStock(productId, orderQuantity);
         return ResponseEntity.ok()
-            .body(SuccessResponse.of(ResponseMessage.PRODUCT_STOCK_DECREASE_SUCCESS));
+            .body(SuccessResponse.of(ResponseMessage.PRODUCT_STOCK_DECREASE_SUCCESS,
+                productService.validateAndDecreaseStock(productId, orderQuantity)));
     }
 }

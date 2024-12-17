@@ -11,4 +11,6 @@ import lombok.NoArgsConstructor;
 public class OrderDeliveryRequestDto {
     private UUID orderId;
     private int orderQuantity;
+    private UUID receiverCompanyId;
+    private UUID supplierCompanyId;
 }

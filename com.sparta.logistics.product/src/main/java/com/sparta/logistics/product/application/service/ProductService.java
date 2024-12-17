@@ -78,5 +78,4 @@ public class ProductService {
         // 상품 정보 반환
         return new ProductFeignClientResponseDto(product.getProductId(), product.getProductName());
     }
-    // todo : 검색 로직 구현
 }
