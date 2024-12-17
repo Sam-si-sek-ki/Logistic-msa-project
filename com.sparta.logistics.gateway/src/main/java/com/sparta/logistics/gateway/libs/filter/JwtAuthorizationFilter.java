@@ -41,8 +41,10 @@ public class JwtAuthorizationFilter implements GlobalFilter, Ordered {
         String method = exchange.getRequest().getMethod() != null ? exchange.getRequest().getMethod().name() : ""; // HTTP 메서드 추출
         String token = extractToken(exchange);
 
-        // /auth/** 경로는 검증하지 않습니다.
-        if (pathMatcher.match("/auth/**", path)) {
+        // 검증 예외 처리
+        if (pathMatcher.match("/auth/**", path) ||
+                pathMatcher.match("/*/v3/api-docs", path) ||
+                pathMatcher.match("/swagger-ui", path)) {
             return chain.filter(exchange);
         }
 
