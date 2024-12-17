@@ -3,13 +3,16 @@ package com.sparta.logistics.product.application.service;
 import com.sparta.logistics.product.domain.model.Product;
 import com.sparta.logistics.product.domain.repository.ProductRepository;
 import com.sparta.logistics.product.infrastructure.client.CompanyFeignClient;
+import com.sparta.logistics.product.infrastructure.dto.CompanyFeignClientResponse;
 import com.sparta.logistics.product.infrastructure.dto.ProductFeignClientResponseDto;
 import com.sparta.logistics.product.libs.exception.ErrorCode;
 import com.sparta.logistics.product.libs.exception.GlobalException;
 import com.sparta.logistics.product.presentation.dto.ProductRequestDto;
 import com.sparta.logistics.product.presentation.dto.ProductResponseDto;
+import java.util.Objects;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,15 +23,16 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final CompanyFeignClient companyFeignClient;
     @Transactional
-    public Product createProduct(ProductRequestDto request, String userName, String userRole) {
-
-//        boolean companyAndHubExists = companyFeignClient.isCompanyExist(request.getCompanyId(), userName, userRole);
-//        if (!companyAndHubExists) {
-//            throw new IllegalArgumentException("상품 등록 권한 또는 업체정보가 없습니다.");
-//        }
-        //todo: 클라이언트에서 받아오도록 변경
-        UUID hubId = UUID.randomUUID();
-        Product product = Product.create(request, hubId);
+    public Product createProduct(ProductRequestDto request) {
+        // 1. 업체 존재 여부 및 허브 아이디 확인
+        ResponseEntity<CompanyFeignClientResponse> companyResponse = companyFeignClient.checkCompanyExistence(
+            request.getCompanyId());
+        if (!companyResponse.getStatusCode().is2xxSuccessful()) {
+            throw new IllegalArgumentException("상품 등록 권한 또는 업체 정보가 없습니다.");
+        }
+        UUID hubId = Objects.requireNonNull(companyResponse.getBody()).getHubId();
+        String companyName = companyResponse.getBody().getCompanyName();
+        Product product = Product.create(request, hubId, companyName);
         return productRepository.save(product);
     }
 
