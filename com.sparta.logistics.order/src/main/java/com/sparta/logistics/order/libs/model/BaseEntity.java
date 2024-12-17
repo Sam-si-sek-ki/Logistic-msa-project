@@ -17,26 +17,28 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public abstract class BaseEntity {
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     @CreatedBy
-    @Column(length = 100, updatable = false)
+    @Column(name = "created_by", length = 100, updatable = false)
     private String createdBy;
 
     @LastModifiedDate
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @LastModifiedBy
-    @Column(length = 100)
+    @Column(name = "updated_by", length = 100)
     private String updatedBy;
 
+    @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    @Column(length = 100)
+    @Column(name = "deleted_by", length = 100)
     private String deletedBy;
 
-    @Column(nullable = false)
+    @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted = false;
 
     public void setDelete(LocalDateTime deletedAt, String deletedBy) {
@@ -44,5 +46,4 @@ public abstract class BaseEntity {
         this.deletedBy = deletedBy;
         this.isDeleted = true;
     }
-
 }
