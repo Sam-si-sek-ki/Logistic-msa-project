@@ -7,6 +7,7 @@ import com.sparta.logistics.company.application.service.CompanyService;
 import com.sparta.logistics.company.infrastructure.configuration.CompanySearchCondition;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -21,8 +22,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
-@RequestMapping("/companies")
+@RequestMapping("/api/companies")
 @RequiredArgsConstructor
 public class CompanyController {
 
@@ -35,6 +37,7 @@ public class CompanyController {
 
   @GetMapping("/{companyId}")
   public ResponseEntity<CompanyResponse> getCompany(@PathVariable UUID companyId) {
+    log.info("Received GET request for company ID: {}", companyId);
     return ResponseEntity.ok(companyService.getCompany(companyId));
   }
 

@@ -46,12 +46,14 @@ public class DeliveryService {
 
         // 1. 수령 업체 정보 조회
         CompanyClientResponse receiverCompany = companyServiceClient.getCompany(
-            orderResponseDto.getReceiverCompanyId()
+            orderResponseDto.getReceiverCompanyId(),
+            userContextHolder.getCurrentAuditor()
         );
 
         // 2. 공급 업체 정보 조회
         CompanyClientResponse supplierCompany = companyServiceClient.getCompany(
-            orderResponseDto.getSupplierCompanyId()
+            orderResponseDto.getSupplierCompanyId(),
+            userContextHolder.getCurrentAuditor()
         );
 
         CreateDeliveryRequest request = CreateDeliveryRequest.of(

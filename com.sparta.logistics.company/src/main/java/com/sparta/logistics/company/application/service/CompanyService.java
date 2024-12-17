@@ -13,12 +13,14 @@ import com.sparta.logistics.company.libs.exception.GlobalException;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CompanyService {
@@ -36,6 +38,7 @@ public class CompanyService {
 
   public CompanyResponse getCompany(UUID companyId) {
     Company company = findCompanyById(companyId);
+    log.info("Received request to get company with ID: {}", companyId);
     return CompanyResponse.fromEntity(company);
   }
 

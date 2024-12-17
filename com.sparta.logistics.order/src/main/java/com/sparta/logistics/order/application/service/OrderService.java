@@ -3,6 +3,7 @@ package com.sparta.logistics.order.application.service;
 import com.sparta.logistics.order.application.dto.OrderDeliveryRequestDto;
 import com.sparta.logistics.order.domain.model.Order;
 import com.sparta.logistics.order.domain.repository.OrderRepository;
+import com.sparta.logistics.order.infrastructure.client.CompanyClientResponse;
 import com.sparta.logistics.order.infrastructure.client.CompanyServiceClient;
 import com.sparta.logistics.order.infrastructure.client.DeliveryServiceClient;
 import com.sparta.logistics.order.infrastructure.clinet.ProductServiceClient;
@@ -41,25 +42,23 @@ public class OrderService {
             request.getOrderQuantity()
         );
         // 상품 이름
-        String receiveName = productResponse.getProductName();
-        log.info("==== Received order request with name {}", receiveName);
+        String productName = productResponse.getProductName();
+        log.info("==== Received order request with name {}", productName);
 
-        //두 회사 ID가 유효한지 확인
-        ResponseEntity<Void> recComp = companyServiceClient.receiverCompanyExist(
-            request.getReceiverCompanyId()
-        );
-        ResponseEntity<Void> supComp = companyServiceClient.supplierCompanyExist(
-            request.getSupplierCompanyId()
-        );
+        UUID receiverCompanyId = request.getReceiverCompanyId();
+        UUID supplierCompanyId = request.getSupplierCompanyId();
 
-        if (recComp.getStatusCode() != HttpStatus.OK && supComp.getStatusCode() != HttpStatus.OK) {
-            // 회사가 유효하지 않은 경우 예외 처리 또는 에러 반환
+        ResponseEntity<CompanyClientResponse> receiverCompany = companyServiceClient.getCompany(receiverCompanyId);
+        ResponseEntity<CompanyClientResponse> supplierCompany = companyServiceClient.getCompany(supplierCompanyId);
+
+        // 두 회사 모두 유효한지 확인
+        if (receiverCompany.getStatusCode() != HttpStatus.OK ||
+            supplierCompany.getStatusCode() != HttpStatus.OK) {
             throw new GlobalException(ErrorCode.INTERNAL_SERVER_ERROR);
         }
 
         // 2. 주문 생성
-        Order order = Order.create(request, receiveName);
-        Order savedOrder = orderRepository.save(order);
+        Order savedOrder = orderRepository.save(request.toEntity(productName));
 
         // 3. 배송 생성 요청 (배송 정보를 포함하는 DTO를 전달)
         OrderDeliveryRequestDto deliveryRequest = new OrderDeliveryRequestDto(
