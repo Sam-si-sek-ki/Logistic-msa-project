@@ -1,4 +1,4 @@
-package com.sparta.logistics.product.libs.model;
+package com.sparta.logistics.order.libs.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

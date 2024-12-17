@@ -43,13 +43,16 @@ public class Product extends BaseEntity {
     @Column(nullable = false)
     private UUID companyId;
 
-    public static Product create(ProductRequestDto request, UUID hubId) {
+    private String companyName;
+
+    public static Product create(ProductRequestDto request, UUID hubId, String companyName) {
         return Product.builder()
             .productName(request.getProductName())
             .stockQuantity(request.getStockQuantity())
             .description(request.getDescription())
             .hubId(hubId)
             .companyId(request.getCompanyId())
+            .companyName(companyName)
             .build();
     }
 

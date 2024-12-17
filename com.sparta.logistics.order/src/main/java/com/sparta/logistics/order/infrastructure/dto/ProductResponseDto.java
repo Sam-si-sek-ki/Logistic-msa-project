@@ -1,13 +1,15 @@
-package com.sparta.logistics.product.application.service;
+package com.sparta.logistics.order.infrastructure.dto;
 
 import java.util.UUID;
+import lombok.Getter;
 
-public class ProductFeignClientResponseDto {
+@Getter
+public class ProductResponseDto {
     private UUID productId;
     private String productName;
 
     // Constructor, Getters, Setters
-    public ProductFeignClientResponseDto(UUID productId, String productName) {
+    public ProductResponseDto(UUID productId, String productName) {
         this.productId = productId;
         this.productName = productName;
     }

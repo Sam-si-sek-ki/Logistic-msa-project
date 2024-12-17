@@ -1,6 +1,5 @@
 package com.sparta.logistics.product.presentation.controller;
 
-import com.sparta.logistics.product.application.dto.StockRequestDto;
 import com.sparta.logistics.product.application.service.ProductService;
 import com.sparta.logistics.product.domain.model.Product;
 import com.sparta.logistics.product.libs.model.ResponseMessage;
@@ -31,12 +30,10 @@ public class ProductController {
     @PostMapping
     @PreAuthorize("hasRole('MASTER_ADMIN') or (hasRole('HUB_ADMIN')) or (hasRole('COMPANY_USER'))")
     public ResponseEntity<SuccessResponse<Product>> createProduct(
-        @RequestBody @Valid ProductRequestDto request,
-        @RequestHeader(value = "X-Username") String userName,
-        @RequestHeader(value = "X-Role") String userRole) {
+        @RequestBody @Valid ProductRequestDto request) {
         return ResponseEntity.ok().body(
             SuccessResponse.of(ResponseMessage.PRODUCT_CREATE_SUCCESS,
-                productService.createProduct(request, userName, userRole)));
+                productService.createProduct(request)));
     }
     //단건 조회
     @GetMapping("/{productId}")
@@ -56,8 +53,9 @@ public class ProductController {
 
     @DeleteMapping("/{productId}")
     @PreAuthorize("hasRole('MASTER_ADMIN') or (hasRole('HUB_ADMIN'))")
-    public ResponseEntity<SuccessResponse<?>> deleteProduct(@PathVariable UUID productId) {
-        productService.softDeleteProduct(productId);
+    public ResponseEntity<SuccessResponse<?>> deleteProduct(@PathVariable UUID productId,
+        @RequestHeader(value = "X-Username") String userName) {
+        productService.softDeleteProduct(productId, userName);
         return ResponseEntity.ok().body(SuccessResponse.of(ResponseMessage.PRODUCT_DELETE_SUCCESS));
     }
 
@@ -65,9 +63,9 @@ public class ProductController {
     @PostMapping("{productId}/validate-and-decrease-stock")
     public ResponseEntity<SuccessResponse<?>> decreaseStock(
         @PathVariable UUID productId,
-        @RequestBody @Valid StockRequestDto request
+        @RequestBody int orderQuantity
     ) {
-        productService.validateAndDecreaseStock(productId, request.getOrderQuantity());
+        productService.validateAndDecreaseStock(productId, orderQuantity);
         return ResponseEntity.ok()
             .body(SuccessResponse.of(ResponseMessage.PRODUCT_STOCK_DECREASE_SUCCESS));
     }
