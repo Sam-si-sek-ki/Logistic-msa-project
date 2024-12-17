@@ -1,29 +1,28 @@
-package com.sparta.logistics.auth.application.dto;
+package com.sparta.logistics.auth.presentation.dto;
 
+import com.sparta.logistics.auth.application.dto.UserRequest;
 import com.sparta.logistics.auth.domain.model.UserRole;
 import java.util.UUID;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class UserRequest {
-
-    private String username;
+public class UserUpdateRequest {
     private String nickname;
     private String email;
     private String password;
-    private String slackId; // TODO : slackId 유효성 검사
+    private String slackId;
     private UserRole role;
     private UUID companyId;
     private UUID hubId;
 
-    public static UserRequest create(String username, String nickname, String email, String password, String slackId, UserRole role, UUID companyId, UUID hubId) {
+    public UserRequest toDTO() {
         return UserRequest.builder()
-                .username(username)
                 .nickname(nickname)
                 .email(email)
                 .password(password)
