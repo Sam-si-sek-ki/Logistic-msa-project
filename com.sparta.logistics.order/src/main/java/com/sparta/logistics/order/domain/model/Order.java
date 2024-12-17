@@ -14,6 +14,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Getter
@@ -21,31 +22,32 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Table(name = "p_order")
+@SQLRestriction(value = "is_deleted = false")
 public class Order extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID orderId;
+    private UUID orderId; // auto
 
     @Column(nullable = false)
-    private UUID productId;
+    private UUID productId; // req dto
 
     @Column(nullable = false)
-    private int orderQuantity;
+    private int orderQuantity;  // requestdto
 
     @Setter
     @Column(nullable = false)
-    private UUID deliveryId;
+    private UUID deliveryId; // Delivery client return
+
+    @Column(nullable = false)@Setter
+    private UUID receiverCompanyId; // Delivery client return
+
+    @Column(nullable = false) @Setter
+    private UUID supplierCompanyId; // Delivery client return
 
     @Column(nullable = false)
-    private UUID receiverCompanyId;
+    private String orderRequirements; // req dto 요구사항
 
-    @Column(nullable = false)
-    private UUID supplierCompanyId;
-
-    @Column(nullable = false)
-    private String orderRequirements; // 요구사항
-
-    private String productName;
+    private String productName; // product client return
 
     public static Order create(OrderRequestDto request, String productName) {
         return Order.builder()
