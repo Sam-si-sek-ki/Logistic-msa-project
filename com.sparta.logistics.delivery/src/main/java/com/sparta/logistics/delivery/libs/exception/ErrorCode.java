@@ -26,7 +26,8 @@ public enum ErrorCode {
     INVALID_DELIVERY_INFO(HttpStatus.BAD_REQUEST, "배송 정보가 유효하지 않습니다."),
     INVALID_HUB_INFO(HttpStatus.BAD_REQUEST, "허브 정보가 유효하지 않습니다."),
     INVALID_HUB_ROUTE(HttpStatus.BAD_REQUEST, "출발지와 도착지 허브가 동일할 수 없습니다."),
-    INVALID_DELIVERY_STATUS(HttpStatus.BAD_REQUEST, "배송 상태가 PENDING일 경우에만 배송 정보를 수정할 수 있습니다.");
+    INVALID_DELIVERY_STATUS(HttpStatus.BAD_REQUEST, "배송 상태가 PENDING일 경우에만 배송 정보를 수정할 수 있습니다."),
+    SLACK_ID_NOT_FOUND(HttpStatus.BAD_REQUEST, "사용자 slack ID가 존재하지 않습니다.");
 
 
 
