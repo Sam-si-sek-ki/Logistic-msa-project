@@ -17,9 +17,19 @@ public enum UserRole {
         this.description = description;
     }
 
-    public String getDescription() { return description; }
+    public static UserRole fromAuthority(String authority) {
+        for (UserRole role : UserRole.values()) {
+            if (role.authority.equals(authority)) {
+                return role;
+            }
+        }
+        throw new IllegalArgumentException("Invalid authority: " + authority);
+    }
 
-    public String getAuthority() { return authority; }
+    // 본인 정보만 조회 가능하도록 역할 제한
+    public boolean isRestrictedRole() {
+        return this == HUB_ADMIN || this == DELIVERY_USER || this == COMPANY_USER;
+    }
 
     private static class Authority {
         public static final String MASTER_ADMIN = "MASTER_ADMIN";

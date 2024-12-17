@@ -68,4 +68,23 @@ public class User extends BaseEntity {
                  .hubId(hubId)
                  .build();
     }
+
+    // 유저 정보 수정 메서드
+    public void update(
+            String nickname,
+            String email,
+            String password,
+            String slackId,
+            UserRole role,
+            UUID companyId,
+            UUID hubId
+    ) {
+        if (nickname != null) this.nickname = nickname;
+        if (email != null) this.email = email;
+        if (password != null) this.password = password;
+        if (slackId != null) this.slackId = slackId;
+        if (role != null) this.role = role;
+        if (companyId != null) this.companyId = companyId;
+        if (hubId != null) this.hubId = hubId;
+    }
 }
