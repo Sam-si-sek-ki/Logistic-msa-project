@@ -26,8 +26,8 @@ public class CreateDeliveryRequest {
   public static CreateDeliveryRequest of(
       OrderResponseDto orderResponseDto,
       CompanyClientResponse receiverCompany,
-      CompanyClientResponse supplierCompany
-  ) {
+      CompanyClientResponse supplierCompany,
+      String slackId) {
     return CreateDeliveryRequest.builder()
         .orderId(orderResponseDto.getOrderId())
         .status(DeliveryStatus.PENDING)

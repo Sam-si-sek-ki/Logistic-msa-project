@@ -35,10 +35,15 @@ public class DeliveryService {
 
   private final DeliveryRepository deliveryRepository;
   private final CompanyServiceClient companyServiceClient;
+  private final UserServiceClient userServiceClient;
   private final DeliveryValidation deliveryValidation;
+  private final UserContextHolder userContextHolder;
 
   @Transactional
   public CreateDeliveryResponse createDelivery(OrderResponseDto orderResponseDto) {
+
+    String username = userContextHolder.getCurrentAuditor();
+    String slackId = String.valueOf(userServiceClient.getUserByUsername(username));
 
     // 1. 수령 업체 정보 조회
     CompanyClientResponse receiverCompany = companyServiceClient.getCompany(
@@ -53,7 +58,8 @@ public class DeliveryService {
     CreateDeliveryRequest request = CreateDeliveryRequest.of(
         orderResponseDto,
         receiverCompany,
-        supplierCompany
+        supplierCompany,
+        slackId
     );
 
     deliveryValidation.createDeliveryValidation(request);
