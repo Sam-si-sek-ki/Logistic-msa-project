@@ -53,6 +53,11 @@ dependencies {
 	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+	// WebClient
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	// 응답Json에서 원하는 값을 뽑기 위한 Jackson
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
 }
 
 tasks.named('test') {

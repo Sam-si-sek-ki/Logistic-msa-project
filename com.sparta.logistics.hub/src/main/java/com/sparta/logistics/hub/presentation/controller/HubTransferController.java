@@ -14,6 +14,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 import static com.sparta.logistics.hub.libs.model.ResponseMessage.*;
@@ -39,15 +40,26 @@ public class HubTransferController {
         return ResponseEntity.ok(SuccessResponse.of(HUB_TRANSFER_SELECT_SUCCESS,hubTransferService.getHubTransfers(predicate, pageable)));
     }
 
-    @PostMapping
-    public ResponseEntity<SuccessResponse<HubTransferResponseDto>> createHubTransfer(@RequestBody HubTransferRequestDto request){
-        hubTransferService.createHubTransfer(request);
-        return ResponseEntity.ok(SuccessResponse.of(HUB_TRANSFER_CREATE_SUCCESS));
-    }
+//    @PostMapping
+//    public ResponseEntity<SuccessResponse<HubTransferResponseDto>> createHubTransfer(@RequestBody HubTransferRequestDto request){
+//        hubTransferService.createHubTransfer(request);
+//        return ResponseEntity.ok(SuccessResponse.of(HUB_TRANSFER_CREATE_SUCCESS));
+//    }
 
     @DeleteMapping("/{hubTransferId}")
     public ResponseEntity<SuccessResponse<HubTransferResponseDto>> deleteHubTransfer(@PathVariable("hubTransferId") String hubId){
         hubTransferService.deleteHubTransfer(UUID.fromString(hubId));
         return ResponseEntity.ok(SuccessResponse.of(HUB_TRANSFER_DELETE_SUCCESS));
+    }
+
+    @GetMapping("/route")
+    public ResponseEntity<SuccessResponse<CreateTransferRouteResponseDto>> getHubTransferRoute(@RequestBody CreateTransferRouteRequestDto request){
+        return ResponseEntity.ok(SuccessResponse.of(HUB_TRANSFER_ROUTE_CREATE_SUCCESS, hubTransferService.createTransferRoute(request)));
+    }
+
+    @PostMapping
+    public ResponseEntity<SuccessResponse<HubTransferResponseDto>> createHubTransfer2(){
+        hubTransferService.createHubTransfer2();
+        return ResponseEntity.ok(SuccessResponse.of(HUB_TRANSFER_CREATE_SUCCESS));
     }
 }

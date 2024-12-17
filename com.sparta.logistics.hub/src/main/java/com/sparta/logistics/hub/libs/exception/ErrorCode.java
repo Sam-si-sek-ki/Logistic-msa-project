@@ -20,6 +20,7 @@ public enum ErrorCode {
     HUB_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 허브를 찾을 수 없습니다."),
 
     HUB_TRANSFER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 허브이동정보 를 찾을 수 없습니다."),
+    HUB_TRANSFER_CREATE_FAIL(HttpStatus.INTERNAL_SERVER_ERROR,"허브간 이동경로 생성 실패"),
 
     HUB_CONNECTION_INFO_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 허브연결정보 를 찾을 수 없습니다.")
 
