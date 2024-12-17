@@ -25,10 +25,12 @@ public enum ResponseMessage{
     LOGIN_FAIL("로그인 실패"),
     LOGOUT_SUCCESS("로그아웃 성공"),
     USER_CREATE_SUCCESS("사용자 등록 성공"),
+    USER_READ_SUCCESS("사용자 조회 성공"),
+    USER_UPDATE_SUCCESS("사용자 수정 성공"),
+    USER_DELETE_SUCCESS("사용자 삭제 성공"),
     VALID_USERNAME("사용 가능한 username 입니다."),
     VALID_EMAIL("사용 가능한 email 입니다."),
-    VALID_SLACKID("사용 가능한 slackId 입니다."),
-    GET_USERS_SUCCESS("사용자 조회 성공")
+    VALID_SLACKID("사용 가능한 slackId 입니다.")
 
     ;
     private final String message;

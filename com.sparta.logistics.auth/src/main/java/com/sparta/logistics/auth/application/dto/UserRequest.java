@@ -9,7 +9,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-@Builder(access = AccessLevel.PRIVATE)
+@Builder
 public class UserRequest {
 
     private String username;

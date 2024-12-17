@@ -27,8 +27,11 @@ public enum ResponseMessage{
 
     HUB_TRANSFER_SELECT_SUCCESS("허브이동관리 조회 성공"),
     HUB_TRANSFER_CREATE_SUCCESS("허브이동관리 생성 성공"),
-    HUB_TRANSFER_UPDATE_SUCCESS("허브이동관리 수정 성공"),
     HUB_TRANSFER_DELETE_SUCCESS("허브이동관리 삭제 성공"),
+
+    HUB_CONNECTION_INFO_SELECT_SUCCESS("허브연결정보 조회 성공"),
+    HUB_CONNECTION_INFO_CREATE_SUCCESS("허브연결정보 생성 성공"),
+    HUB_CONNECTION_INFO_DELETE_SUCCESS("허브연결정보 삭제 성공"),
 
     ;
     private final String message;

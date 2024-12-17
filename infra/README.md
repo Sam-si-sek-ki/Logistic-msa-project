@@ -72,3 +72,15 @@ docker rm -f $(docker ps -aq)
 # 스크립트 실행 (데이터 폴더 재생성 및 컨테이너 재시작) 
 ./reset-postgres.sh
 ~~~
+
+# Redis Stack
+### Redis Server
+- Host : localhost
+- Port : 6379
+### Redis Insight
+- Host : localhost
+- Port : 8001
+
+# Zipkin
+- Host : localhost
+- Port : 9411

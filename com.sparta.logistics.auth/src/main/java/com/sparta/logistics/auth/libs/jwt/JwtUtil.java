@@ -1,4 +1,4 @@
-package com.sparta.logistics.auth.libs.security;
+package com.sparta.logistics.auth.libs.jwt;
 
 import com.sparta.logistics.auth.domain.model.UserRole;
 import io.jsonwebtoken.Claims;

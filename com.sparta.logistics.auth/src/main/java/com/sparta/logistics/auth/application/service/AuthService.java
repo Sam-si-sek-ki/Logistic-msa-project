@@ -5,7 +5,7 @@ import com.sparta.logistics.auth.domain.model.User;
 import com.sparta.logistics.auth.domain.repository.UserRepository;
 import com.sparta.logistics.auth.libs.exception.ErrorCode;
 import com.sparta.logistics.auth.libs.exception.GlobalException;
-import com.sparta.logistics.auth.libs.security.JwtUtil;
+import com.sparta.logistics.auth.libs.jwt.JwtUtil;
 import com.sparta.logistics.auth.presentation.dto.SignInRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

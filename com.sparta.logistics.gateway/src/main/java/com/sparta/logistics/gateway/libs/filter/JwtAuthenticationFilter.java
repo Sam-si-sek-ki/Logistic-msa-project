@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -24,6 +25,7 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
 
     private final String secretKey;
     private final AuthService authService;
+    private final AntPathMatcher pathMatcher = new AntPathMatcher(); // AntPathMatcher 재사용
 
     // FeignClient 와 Global Filter 의 순환참조 문제가 발생하여 Bean 초기 로딩 시 순환을 막기 위해 @Lazy 어노테이션을 추가함.
     public JwtAuthenticationFilter(@Value("${service.jwt.secret-key}") String secretKey, @Lazy AuthService authService) {
@@ -36,8 +38,11 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(final ServerWebExchange exchange, final GatewayFilterChain chain) {
         // 접근하는 URI 의 Path 값을 받아옵니다.
         String path = exchange.getRequest().getURI().getPath();
-        // /auth 로 시작하는 요청들은 검증하지 않습니다.
-        if (path.startsWith("/auth")) {
+
+        // 검증 예외 처리
+        if (pathMatcher.match("/auth/**", path) ||
+                pathMatcher.match("/*/v3/api-docs", path) ||
+                pathMatcher.match("/swagger-ui", path)) {
             return chain.filter(exchange);
         }
 
