@@ -10,12 +10,17 @@ import com.sparta.logistics.delivery.domain.model.DeliveryStatus;
 import com.sparta.logistics.delivery.domain.repository.delivery.DeliveryRepository;
 import com.sparta.logistics.delivery.infrastructure.client.company.CompanyServiceClient;
 import com.sparta.logistics.delivery.infrastructure.client.company.CompanyClientResponse;
+import com.sparta.logistics.delivery.infrastructure.client.notification.NotificationRequest;
+import com.sparta.logistics.delivery.infrastructure.client.notification.NotificationServiceClient;
 import com.sparta.logistics.delivery.infrastructure.client.order.OrderResponseDto;
+import com.sparta.logistics.delivery.infrastructure.client.user.UserServiceClient;
+import com.sparta.logistics.delivery.infrastructure.configuration.UserContextHolder;
 import com.sparta.logistics.delivery.libs.exception.ErrorCode;
 import com.sparta.logistics.delivery.libs.exception.GlobalException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -55,7 +60,6 @@ public class DeliveryService {
 
     Delivery delivery = request.toEntity();
     delivery = deliveryRepository.save(delivery);
-
     return CreateDeliveryResponse.fromEntity(delivery);
   }
 

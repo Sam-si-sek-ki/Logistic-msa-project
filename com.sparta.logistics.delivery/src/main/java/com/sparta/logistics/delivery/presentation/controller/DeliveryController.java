@@ -36,6 +36,14 @@ public class DeliveryController {
     return ResponseEntity.ok(response);
   }
 
+  @PostMapping("/test")
+  public ResponseEntity<CreateDeliveryResponse> createDeliveryTest(
+      @RequestBody OrderResponseDto orderResponseDto
+  ) {
+    return ResponseEntity.ok(deliveryService.createDelivery(orderResponseDto));
+  }
+
+
   @PutMapping("/{deliveryId}")
   public ResponseEntity<GetDeliveryResponse> updateDelivery(
       @PathVariable UUID deliveryId,
@@ -65,5 +73,6 @@ public class DeliveryController {
   ) {
     return ResponseEntity.ok(deliveryService.findDeliveries(status));
   }
+
 
 }

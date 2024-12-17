@@ -21,6 +21,7 @@ public class CreateDeliveryRequest {
   private String deliveryMainAddress;
   private String deliveryDetailAddress;
   private String recipientName;
+  private String slackId;
 
   public static CreateDeliveryRequest of(
       OrderResponseDto orderResponseDto,
@@ -35,6 +36,7 @@ public class CreateDeliveryRequest {
         .deliveryMainAddress(receiverCompany.getCompanyMainAddress())
         .deliveryDetailAddress(receiverCompany.getCompanyDetailAddress())
         .recipientName(receiverCompany.getCompanyName())
+        .slackId(slackId)
         .build();
   }
 
@@ -47,6 +49,7 @@ public class CreateDeliveryRequest {
         .deliveryMainAddress(this.deliveryMainAddress)
         .deliveryDetailAddress(this.deliveryDetailAddress)
         .recipientName(this.recipientName)
+        .slackId(this.slackId)
         .build();
   }
 }
