@@ -47,11 +47,23 @@ public class DeliveryService {
         String username = userContextHolder.getCurrentAuditor();
         log.info("Request headers - X-Username: {}, X-Role: {}", username, role);
 
+        ResponseEntity<SuccessResponse<UserResponse>> response =
+            userServiceClient.getUserByUsername(username, h_username, role);
+        log.info("User service response: {}", response.getBody());
+
+        if (response.getBody() == null || response.getBody().data() == null) {
+            log.error("User response is null");
+            throw new GlobalException(ErrorCode.BAD_REQUEST);
+        }
+
         String slackId = Optional.ofNullable(userServiceClient.getUserByUsername(username, username, role))
             .map(ResponseEntity::getBody)         // SuccessResponse 얻기
             .map(SuccessResponse::data)        // UserResponse 얻기
             .map(UserResponse::getSlackId)        // slackId 얻기
-            .orElseThrow(() -> new GlobalException(ErrorCode.SLACK_ID_NOT_FOUND));
+            .orElseThrow(() -> {
+                log.error("SlackId is null for user: {}", username);
+                return new GlobalException(ErrorCode.SLACK_ID_NOT_FOUND);
+            });
 
         log.info("Request headers - X-Username: {}, X-Role: {}", username, role);
 
