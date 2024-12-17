@@ -9,7 +9,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class CompanyResponse {
+public class GetCompanyResponse {
 
   private UUID companyId;
   private String companyName;
@@ -19,6 +19,8 @@ public class CompanyResponse {
   private String companyDetailAddress;
   private LocalDateTime createdAt;
   private String createdBy;
+  private LocalDateTime updatedAt;
+  private LocalDateTime updatedBy;
 
   public static CompanyResponse fromEntity(Company company) {
     return CompanyResponse.builder()
@@ -28,8 +30,6 @@ public class CompanyResponse {
         .hubId(company.getHubId())
         .companyMainAddress(company.getCompanyMainAddress())
         .companyDetailAddress(company.getCompanyDetailAddress())
-        .createdAt(company.getCreatedAt())
-        .createdBy(company.getCreatedBy())
         .build();
   }
 }

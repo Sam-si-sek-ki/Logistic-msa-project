@@ -1,8 +1,8 @@
 package com.sparta.logistics.delivery.application.validation;
 
 import com.sparta.logistics.delivery.application.dto.driver.CreateDriverRequest;
-import com.sparta.logistics.delivery.infrastructure.client.HubServiceClient;
-import com.sparta.logistics.delivery.infrastructure.client.dto.HubClientResponse;
+import com.sparta.logistics.delivery.infrastructure.client.hub.HubServiceClient;
+import com.sparta.logistics.delivery.infrastructure.client.hub.HubClientResponse;
 import com.sparta.logistics.delivery.libs.exception.ErrorCode;
 import com.sparta.logistics.delivery.libs.exception.GlobalException;
 import java.util.UUID;
