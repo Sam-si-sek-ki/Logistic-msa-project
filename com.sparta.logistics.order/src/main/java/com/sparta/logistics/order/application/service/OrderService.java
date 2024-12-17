@@ -63,7 +63,9 @@ public class OrderService {
         // 3. 배송 생성 요청 (배송 정보를 포함하는 DTO를 전달)
         OrderDeliveryRequestDto deliveryRequest = new OrderDeliveryRequestDto(
             savedOrder.getOrderId(),
-            savedOrder.getOrderQuantity()
+            savedOrder.getOrderQuantity(),
+            savedOrder.getReceiverCompanyId(),
+            savedOrder.getSupplierCompanyId()
         );
         CreateDeliveryResponse deliveryResponse = deliveryServiceClient.createDelivery(
             deliveryRequest);
