@@ -1,16 +1,14 @@
 package com.sparta.logistics.order.application.dto;
 
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderDeliveryRequestDto {
     private UUID orderId;
     private int orderQuantity;
-
-    // 생성자, Getter, Setter
-    public OrderDeliveryRequestDto(UUID orderId, int orderQuantity) {
-        this.orderId = orderId;
-        this.orderQuantity = orderQuantity;
-    }
 }

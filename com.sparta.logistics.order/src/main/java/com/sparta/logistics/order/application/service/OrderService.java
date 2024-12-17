@@ -33,13 +33,14 @@ public class OrderService {
             request.getProductId(),
             request.getOrderQuantity()
         );
-        // product name
+        // 상품 이름
         String receiveName = productResponse.getProductName();
+
         // 2. 주문 생성
         Order order = Order.create(request, receiveName);
         Order savedOrder = orderRepository.save(order);
 
-        // 3. 배송 생성 요청 (필요한 데이터만 DTO로 전달)
+        // 3. 배송 생성 요청 (배송 정보를 포함하는 DTO를 전달)
         OrderDeliveryRequestDto deliveryRequest = new OrderDeliveryRequestDto(
             savedOrder.getOrderId(),
             savedOrder.getOrderQuantity()
