@@ -29,6 +29,12 @@ eureka:
     service-url:
       defaultZone: http://localhost:19090/eureka/
 
+slack:
+  api:
+    url: https://slack.com/api
+  bot:
+    token: ${SLACK_BOT_TOKEN}
+
 #  api-docs:
 #    path: /notification-service/v3/api-docs
 #  swagger-ui:

@@ -16,9 +16,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "p_slack_message")
@@ -49,8 +46,6 @@ public class SlackMessage extends BaseEntity {
     private UUID referenceId;
 
     private Integer retryCount = 0; // 초기값 설정
-
-    private String slackMessage;
 
     private String slackTimestamp;
 
@@ -87,7 +82,6 @@ public class SlackMessage extends BaseEntity {
             ServiceName serviceName,
             UUID referenceId,
             Integer retryCount,
-            String slackMessage,
             String slackTimestamp
     ) {
         if (recipientId != null) this.recipientId = recipientId;
@@ -96,12 +90,11 @@ public class SlackMessage extends BaseEntity {
         if (serviceName != null) this.serviceName = serviceName;
         if (referenceId != null) this.referenceId = referenceId;
         if (retryCount != null) this.retryCount = retryCount;
-        if (slackMessage != null) this.slackMessage = slackMessage;
         if (slackTimestamp != null) this.slackTimestamp = slackTimestamp;
     }
 
     // Retry 횟수 증가 메서드
-    public void incrementRetryCount() {
-        this.retryCount++;
+    public void updateRetryCount(int retryCount) {
+        this.retryCount = retryCount;
     }
 }

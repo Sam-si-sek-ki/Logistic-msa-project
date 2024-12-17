@@ -21,6 +21,7 @@ public enum ResponseMessage{
      */
 
     // Notifications
+    SLACK_MESSAGE_SEND_SUCCESS("슬랙 메시지 전송 성공"),
     CREATE_SUCCESS("등록 성공"),
     READ_SUCCESS("조회 성공"),
     UPDATE_SUCCESS("수정 성공"),

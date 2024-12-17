@@ -29,7 +29,6 @@ public class UserUpdateRequest {
     )
     private String password;
 
-    @Email(message = "유효한 이메일 형식이어야 합니다.")
     private String slackId;
 
     private UserRole role;

@@ -18,6 +18,7 @@ public enum ErrorCode {
 
     // Notifications
     RESOURCE_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 정보를 찾을 수 없습니다."),
+    SLACK_MESSAGE_SEND_FAILED(HttpStatus.SERVICE_UNAVAILABLE, "슬랙 메시지 전송에 실패하였습니다."),
 
 
     /**

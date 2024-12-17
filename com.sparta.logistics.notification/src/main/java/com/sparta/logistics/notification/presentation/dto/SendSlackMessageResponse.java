@@ -11,15 +11,11 @@ import lombok.NoArgsConstructor;
 @Builder
 public class SendSlackMessageResponse {
 
-    private String result;
-    private String messageId;
-    private String timestamp;
+    private String slackMessageId;
 
-    public static SendSlackMessageResponse of(String result, String messageId, String timestamp) {
+    public static SendSlackMessageResponse of(String slackMessageId) {
         return SendSlackMessageResponse.builder()
-                .result(result)
-                .messageId(messageId)
-                .timestamp(timestamp)
+                .slackMessageId(slackMessageId)
                 .build();
     }
 }

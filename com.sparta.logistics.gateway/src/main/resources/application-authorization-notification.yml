@@ -12,3 +12,35 @@ authorization:
         - HUB_ADMIN
         - DELIVERY_USER
         - COMPANY_USER
+
+    - path: /auth/**
+      method:
+        - GET
+        - POST
+      roles:
+        - PUBLIC
+    - path: /users/**
+      method:
+        - GET
+        - POST
+        - PATCH
+        - PUT
+        - DELETE
+      roles:
+        - MASTER_ADMIN
+    - path: /users
+      method:
+        - GET
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+        - DELIVERY_USER
+        - COMPANY_USER
+    - path: /users/*
+      method:
+        - GET
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+        - DELIVERY_USER
+        - COMPANY_USER

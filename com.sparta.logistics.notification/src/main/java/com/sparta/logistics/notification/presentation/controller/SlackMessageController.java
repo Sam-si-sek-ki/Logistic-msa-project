@@ -23,10 +23,10 @@ public class SlackMessageController {
 
     @PostMapping("/slack/send")
     @Operation(summary = "슬랙 메시지 전송", description = "슬랙 메시지 전송 요청 API")
-    public ResponseEntity<SuccessResponse<SendSlackMessageResponse>> createSlackMessage(
+    public ResponseEntity<SuccessResponse<SendSlackMessageResponse>> sendSlackMessage(
             @RequestBody @Valid SendSlackMessageRequest request) {
         return ResponseEntity.ok().body(
-                SuccessResponse.of(ResponseMessage.CREATE_SUCCESS, slackMessageService.saveSlackMessage(request)));
+                SuccessResponse.of(ResponseMessage.SLACK_MESSAGE_SEND_SUCCESS, slackMessageService.sendSlackMessage(request)));
     }
 }
 
