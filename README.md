@@ -93,7 +93,7 @@
 ## 🌐 Architecture
 
 ## Structure
-
+```
 logistics.msa
 ├── gateway-service            // API Gateway, 라우팅
 │   └── [presentation/application/domain/infrastructure]
@@ -140,7 +140,7 @@ logistics.msa
 │   └── repository
 └── infrastructure    // 외부 시스템 연동
     └── client
-
+```
 <br>
 
 ## 📋 ERD Diagram
