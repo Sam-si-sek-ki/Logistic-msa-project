@@ -3,6 +3,7 @@ package com.sparta.logistics.product.application.service;
 import com.sparta.logistics.product.domain.model.Product;
 import com.sparta.logistics.product.domain.repository.ProductRepository;
 import com.sparta.logistics.product.infrastructure.client.CompanyFeignClient;
+import com.sparta.logistics.product.infrastructure.dto.ProductFeignClientResponseDto;
 import com.sparta.logistics.product.libs.exception.ErrorCode;
 import com.sparta.logistics.product.libs.exception.GlobalException;
 import com.sparta.logistics.product.presentation.dto.ProductRequestDto;

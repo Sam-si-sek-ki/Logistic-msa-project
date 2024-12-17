@@ -1,7 +1,9 @@
-package com.sparta.logistics.product.application.service;
+package com.sparta.logistics.product.infrastructure.dto;
 
 import java.util.UUID;
+import lombok.Getter;
 
+@Getter
 public class ProductFeignClientResponseDto {
     private UUID productId;
     private String productName;
