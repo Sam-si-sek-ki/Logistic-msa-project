@@ -40,7 +40,7 @@ public class OrderController {
         }
         return ResponseEntity.ok().body(
             SuccessResponse.of(ResponseMessage.ORDER_CREATE_SUCCESS,
-                orderService.createOrder(request)));
+                orderService.createOrder(request, username, role)));
     }
 
     @GetMapping("/{orderId}")

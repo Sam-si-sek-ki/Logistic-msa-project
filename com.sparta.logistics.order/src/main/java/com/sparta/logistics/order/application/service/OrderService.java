@@ -33,7 +33,8 @@ public class OrderService {
     private final CompanyServiceClient companyServiceClient;
 
     @Transactional
-    public OrderResponseDto createOrder(@Valid OrderRequestDto request) {
+    public OrderResponseDto createOrder(@Valid OrderRequestDto request, String username,
+        String role) {
         // 1. 상품 존재 여부 확인 및 재고 감소 + 상품 이름 반환
         ProductResponseDto productResponse = productServiceClient.validateAndDecreaseStock(
             request.getProductId(),
@@ -68,7 +69,10 @@ public class OrderService {
             savedOrder.getSupplierCompanyId()
         );
         CreateDeliveryResponse deliveryResponse = deliveryServiceClient.createDelivery(
-            deliveryRequest);
+            deliveryRequest,
+            username,
+            role
+        );
 
         // 4. 주문에 배송 ID 설정
         savedOrder.setDeliveryId(deliveryResponse.getDeliveryId());
