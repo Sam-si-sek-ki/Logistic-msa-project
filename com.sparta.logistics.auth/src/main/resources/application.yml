@@ -1,22 +1,8 @@
 spring:
   application:
     name: auth-service
-
-  datasource:
-    url: jdbc:postgresql://localhost:15432/sparta_auth
-    username: sparta_auth
-    password: sparta_auth
-    driver-class-name: org.postgresql.Driver
-
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-#    defer-datasource-initialization: true # 테이블 생성 후에 data.sql 실행
+  config:
+    import: configserver:http://localhost:19092   # Config Server 주소
 
 server:
   port: 19093
@@ -30,3 +16,13 @@ service:
   jwt:
     access-expiration: 360000
     secret-key: "401b09eab3c013d4ca54922bb802bec8fd5318192b0a75f201d8b3727429080fb337591abd3e44453b954555b7a0812e1081c39b740293f765eae731f5a65ed1"
+
+springdoc:
+  api-docs:
+    path: /auth-service/v3/api-docs
+  swagger-ui:
+    path: /auth-service/swagger-ui.html
+
+openapi:
+  service:
+    url: http://localhost:19091 # API Gateway 포트

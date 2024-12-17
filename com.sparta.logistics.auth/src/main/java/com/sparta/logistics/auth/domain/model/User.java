@@ -48,7 +48,7 @@ public class User extends BaseEntity {
     @Column
     private UUID hubId;
 
-    // 유저 생성 메서드
+     // 유저 생성 메서드
      public static User create(
              String username,
              String nickname,

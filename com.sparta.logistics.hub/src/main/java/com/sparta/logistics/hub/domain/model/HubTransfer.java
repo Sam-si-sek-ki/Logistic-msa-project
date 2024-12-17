@@ -31,7 +31,7 @@ public class HubTransfer extends BaseEntity {
     @JsonIgnore
     private Hub toHub;
 
-    private int duration;
-    private int distance;
+    private long duration;
+    private long distance;
 }
 

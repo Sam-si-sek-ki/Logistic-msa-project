@@ -1,10 +1,29 @@
 spring:
   application:
     name: notification-service
+  config:
+    import: configserver:http://localhost:19092 # Config Server 주소
 
 server:
   port: 19099
+
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:19090/eureka/
+
+slack:
+  api:
+    url: https://slack.com/api
+  bot:
+    token: ${SLACK_BOT_TOKEN}
+
+springdoc:
+  api-docs:
+    path: /notification-service/v3/api-docs
+  swagger-ui:
+    path: /notification-service/swagger-ui.html
+
+openapi:
+  service:
+    url: http://localhost:19091 # API Gateway 포트

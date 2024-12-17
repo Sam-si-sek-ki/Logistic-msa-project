@@ -125,3 +125,15 @@ authorization:
     ###### Delivery ######
 
     ###### Notification ######
+    - path: /notifications/**
+      method:
+        - GET
+        - POST
+        - PATCH
+        - PUT
+        - DELETE
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+        - DELIVERY_USER
+        - COMPANY_USER

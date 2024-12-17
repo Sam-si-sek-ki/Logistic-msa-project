@@ -28,6 +28,8 @@ public class CompanyResponse {
         .hubId(company.getHubId())
         .companyMainAddress(company.getCompanyMainAddress())
         .companyDetailAddress(company.getCompanyDetailAddress())
+        .createdAt(company.getCreatedAt())
+        .createdBy(company.getCreatedBy())
         .build();
   }
 }
