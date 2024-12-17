@@ -21,6 +21,8 @@ public enum ResponseMessage{
 
     // domain
     DELIVERY_SEARCH_SUCCESS("배송 조회가 완료되었습니다."),
+    TRANSFER_ROUTE_CREATE_SUCCESS("배송 경로가 생성되었습니다."),
+    TRANSFER_ROUTE_SELECT_SUCCESS("배송 경로 조회가 완료되었습니다."),
 
     ;
     private final String message;

@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.UUID;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -53,6 +54,7 @@ public class TransferRoute extends BaseEntity {
   @Column(name = "driver_id", nullable = false, columnDefinition = "uuid")
   private UUID driverId;
 
+  @Builder
   public TransferRoute(UUID transferRouteId, UUID deliveryId, Integer sequence, UUID fromHubId,
       UUID toHubId, Integer expectedDistance, Integer expectedDuration, Integer actualDistance,
       Integer actualDuration, TransferStatus transferStatus, UUID driverId

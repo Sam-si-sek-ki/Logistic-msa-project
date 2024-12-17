@@ -5,7 +5,7 @@ import com.sparta.logistics.delivery.application.dto.delivery.GetDeliveryRespons
 import com.sparta.logistics.delivery.application.dto.delivery.UpdateDeliveryRequest;
 import com.sparta.logistics.delivery.application.service.DeliveryService;
 import com.sparta.logistics.delivery.domain.model.DeliveryStatus;
-import com.sparta.logistics.delivery.infrastructure.client.dto.OrderResponseDto;
+import com.sparta.logistics.delivery.infrastructure.client.order.OrderResponseDto;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;

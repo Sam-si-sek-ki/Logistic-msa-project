@@ -36,6 +36,12 @@ public class DriverService {
     return (totalDrivers == 0) ? 1: (maxSequence % totalDrivers);
   }
 
+  public Driver getNextSequenceDriver(UUID hubId) {
+    int sequence = calculateNextSequence(hubId);
+    return driverRepository.findByHubIdAndSequenceAndDeletedFalse(hubId, sequence)
+        .orElseThrow(() -> new GlobalException(ErrorCode.DRIVER_NOT_FOUND));
+  }
+
   public GetDriverResponse getDriver(UUID driverId) {
     Driver driver = driverRepository.findByDriverId(driverId)
         .orElseThrow(() -> new GlobalException(ErrorCode.DRIVER_NOT_FOUND));

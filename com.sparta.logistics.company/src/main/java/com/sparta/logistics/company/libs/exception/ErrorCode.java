@@ -17,8 +17,8 @@ public enum ErrorCode {
     SERVICE_UNAVAILABLE(HttpStatus.SERVICE_UNAVAILABLE, "외부 서비스와 통신 중 오류가 발생했습니다."),
 
     // delivery
-    COMPANY_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 회사를 찾을 수 없습니다.");
-
+    COMPANY_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 회사를 찾을 수 없습니다."),
+    HUB_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 허브를 찾을 수 없습니다.");
 
     private final HttpStatus httpStatus;
     private final String description;

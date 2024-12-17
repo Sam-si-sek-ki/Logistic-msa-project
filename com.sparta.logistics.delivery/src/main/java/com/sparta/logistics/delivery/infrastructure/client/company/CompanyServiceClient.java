@@ -1,6 +1,5 @@
-package com.sparta.logistics.delivery.infrastructure.client;
+package com.sparta.logistics.delivery.infrastructure.client.company;
 
-import com.sparta.logistics.delivery.infrastructure.client.dto.CompanyClientResponse;
 import java.util.UUID;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
