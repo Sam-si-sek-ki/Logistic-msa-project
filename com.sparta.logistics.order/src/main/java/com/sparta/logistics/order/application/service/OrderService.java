@@ -15,11 +15,13 @@ import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService {
 
     private final OrderRepository orderRepository;
@@ -35,7 +37,7 @@ public class OrderService {
         );
         // 상품 이름
         String receiveName = productResponse.getProductName();
-
+        log.info("==== Received order request with name {}", receiveName);
         // 2. 주문 생성
         Order order = Order.create(request, receiveName);
         Order savedOrder = orderRepository.save(order);
@@ -49,7 +51,7 @@ public class OrderService {
 
         // 4. 주문에 배송 ID 설정
         savedOrder.setDeliveryId(deliveryResponse.getDeliveryId());
-
+        log.info("==== 배송 Id : " + savedOrder.getDeliveryId());
         // 5. 응답 DTO 반환
         return OrderResponseDto.from(savedOrder);
     }

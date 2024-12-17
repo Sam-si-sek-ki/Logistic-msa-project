@@ -52,6 +52,7 @@ public class Order extends BaseEntity {
             .productId(request.getProductId())
             .orderQuantity(request.getOrderQuantity())
             .productName(productName)
+            .orderRequirements(request.getOrderRequirements())
             .build();
     }
 

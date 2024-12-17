@@ -1,0 +1,18 @@
+authorization:
+  rules:
+    - path: /orders/**
+      method:
+        - GET
+        - POST
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+        - COMPANY_USER
+    - path: /orders/
+      method:
+        - GET
+        - POST
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+        - COMPANY_USER
