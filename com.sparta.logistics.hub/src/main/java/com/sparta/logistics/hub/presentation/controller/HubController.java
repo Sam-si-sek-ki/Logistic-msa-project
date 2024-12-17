@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ import static com.sparta.logistics.hub.libs.model.ResponseMessage.HUB_CREATE_SUC
 import static com.sparta.logistics.hub.libs.model.ResponseMessage.HUB_SELECT_SUCCESS;
 
 @RestController
-@RequestMapping("/hub")
+@RequestMapping("/hubs")
 @RequiredArgsConstructor
 @Slf4j
 public class HubController {
@@ -44,7 +45,10 @@ public class HubController {
     }
 
     @PostMapping
-    public ResponseEntity<SuccessResponse<HubResponseDto>> createHub(@RequestBody HubRequestDto request){
+    public ResponseEntity<SuccessResponse<HubResponseDto>> createHub(@RequestBody HubRequestDto request,
+                                                                     @RequestHeader HttpHeaders headers){
+        System.out.println(headers.get("X-Username").toString());
+        System.out.println(headers.get("X-Role").toString());
         hubService.insertHub(request);
         return ResponseEntity.ok(SuccessResponse.of(HUB_CREATE_SUCCESS));
     }

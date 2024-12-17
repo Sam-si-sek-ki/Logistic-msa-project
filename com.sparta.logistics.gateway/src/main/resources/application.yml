@@ -12,7 +12,7 @@ spring:
         - id: auth-service           # 라우트 식별자
           uri: lb://auth-service    # 'auth-service'라는 이름으로 로드 밸런싱된 서비스로 라우팅
           predicates:
-            - Path=/auth/**,/users/**          # /auth/**,/users/** 경로로 들어오는 요청을 이 라우트로 처리
+            - Path=/auth/**,/users/**,/auth-service/**          # 해당 경로로 들어오는 요청을 이 라우트로 처리
         - id: company-service
           uri: lb://company-service
           predicates:
@@ -24,7 +24,7 @@ spring:
         - id: hub-service
           uri: lb://hub-service
           predicates:
-            - Path=/hubs/**,/transfers/**
+            - Path=/hubs/**,/hub-transfers/**, /hub-connection-infos/**
         - id: order-service
           uri: lb://order-service
           predicates:
@@ -40,6 +40,15 @@ spring:
       discovery:
         locator:
           enabled: true  # 서비스 디스커버리를 통해 동적으로 라우트를 생성하도록 설정
+      # CORS 설정
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
 
   # Authorization Rules
   config:
@@ -60,3 +69,21 @@ eureka:
 service:
   jwt:
     secret-key: "401b09eab3c013d4ca54922bb802bec8fd5318192b0a75f201d8b3727429080fb337591abd3e44453b954555b7a0812e1081c39b740293f765eae731f5a65ed1"
+
+springdoc:
+  enable-native-support: true
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    use-root-path: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - name: auth-service
+        url: /auth-service/v3/api-docs
+
+logging:
+  level:
+    org.springframework.web.reactive.function.client.WebClient: DEBUG
+    org.springframework.cloud.gateway: DEBUG

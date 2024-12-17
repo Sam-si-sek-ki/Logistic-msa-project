@@ -4,7 +4,6 @@ import java.util.UUID;
 import lombok.Getter;
 
 @Getter
-public class HubTransferClientResponse {
-  private UUID fromHubId;
-  private UUID toHubId;
+public class HubClientResponse {
+  private UUID hubId;
 }

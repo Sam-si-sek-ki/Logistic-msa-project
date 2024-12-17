@@ -23,6 +23,7 @@ public enum ErrorCode {
     SLACKID_VALIDATION_FAILED(HttpStatus.BAD_REQUEST, "확인되지 않는 slackId 입니다."),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 사용자를 찾을 수 없습니다."),
     PASSWORD_NOT_MATCHED(HttpStatus.NOT_FOUND, "비밀번호가 일치하지 않습니다."),
+    USER_ALREADY_DELETED(HttpStatus.BAD_REQUEST, "이미 삭제 된 사용자입니다."),
 
 
     /**
