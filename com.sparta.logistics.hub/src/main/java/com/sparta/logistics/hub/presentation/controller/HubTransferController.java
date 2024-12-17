@@ -28,7 +28,6 @@ public class HubTransferController {
 
     @GetMapping("/{hubTransferId}")
     public ResponseEntity<SuccessResponse<HubTransferResponseDto>> getHubTransfersById(@PathVariable("hubTransferId") String id){
-        log.info("👀👀 get hub by id: {} 👀👀", id);
         return ResponseEntity.ok(SuccessResponse.of(HUB_TRANSFER_SELECT_SUCCESS,hubTransferService.getHubTransfersById(UUID.fromString(id))));
     }
 

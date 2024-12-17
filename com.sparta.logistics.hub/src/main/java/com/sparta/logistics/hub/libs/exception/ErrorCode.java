@@ -21,6 +21,7 @@ public enum ErrorCode {
 
     HUB_TRANSFER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 허브이동정보 를 찾을 수 없습니다."),
 
+    HUB_CONNECTION_INFO_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 허브연결정보 를 찾을 수 없습니다.")
 
     /**
      * 사용 예
