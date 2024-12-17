@@ -3,8 +3,8 @@ package com.sparta.logistics.delivery.application.dto.delivery;
 
 import com.sparta.logistics.delivery.domain.model.Delivery;
 import com.sparta.logistics.delivery.domain.model.DeliveryStatus;
-import com.sparta.logistics.delivery.infrastructure.client.dto.CompanyClientResponse;
-import com.sparta.logistics.delivery.infrastructure.client.dto.OrderResponseDto;
+import com.sparta.logistics.delivery.infrastructure.client.company.CompanyClientResponse;
+import com.sparta.logistics.delivery.infrastructure.client.order.OrderResponseDto;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;

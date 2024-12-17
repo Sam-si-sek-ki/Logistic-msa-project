@@ -1,4 +1,4 @@
-package com.sparta.logistics.order.infrastructure.clinet;
+package com.sparta.logistics.order.infrastructure.client;
 
 import com.sparta.logistics.order.application.dto.OrderDeliveryRequestDto;
 import com.sparta.logistics.order.infrastructure.dto.CreateDeliveryResponse;

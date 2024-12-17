@@ -1,4 +1,4 @@
-package com.sparta.logistics.delivery.infrastructure.client.dto;
+package com.sparta.logistics.delivery.infrastructure.client.company;
 
 import java.util.UUID;
 import lombok.Getter;
