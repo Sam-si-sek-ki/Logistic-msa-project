@@ -2,7 +2,6 @@ package com.sparta.logistics.auth.application.dto;
 
 import com.sparta.logistics.auth.domain.model.UserRole;
 import java.util.UUID;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +15,7 @@ public class UserRequest {
     private String nickname;
     private String email;
     private String password;
-    private String slackId; // TODO : slackId 유효성 검사
+    private String slackId;
     private UserRole role;
     private UUID companyId;
     private UUID hubId;

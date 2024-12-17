@@ -2,9 +2,38 @@ spring:
   application:
     name: notification-service
 
+  datasource:
+    url: jdbc:postgresql://localhost:15432/sparta_notification
+    username: sparta_notification
+    password: sparta_notification
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  cloud:
+    config:
+      enabled: false
+
 server:
   port: 19099
+
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:19090/eureka/
+
+#  api-docs:
+#    path: /notification-service/v3/api-docs
+#  swagger-ui:
+#    path: /notification-service/swagger-ui.html
+#
+#openapi:
+#  service:
+#    url: http://localhost:19091 # API Gateway 포트
