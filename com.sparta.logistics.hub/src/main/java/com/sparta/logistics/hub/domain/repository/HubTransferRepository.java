@@ -30,4 +30,6 @@ public interface HubTransferRepository extends JpaRepository<HubTransfer, UUID> 
             return Optional.of(bb);
         });
     }
+
+    HubTransfer findByFromHubHubIdAndToHubHubId(UUID fromHubId, UUID toHubId);
 }

@@ -1,18 +1,22 @@
 package com.sparta.logistics.hub.libs.model;
 
+import com.sparta.logistics.hub.application.service.HubTransferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
 
     private final JdbcTemplate jdbcTemplate;
+    private final HubTransferService hubTransferService;
 
     @Autowired
-    public DataInitializer(JdbcTemplate jdbcTemplate) {
+    public DataInitializer(JdbcTemplate jdbcTemplate, HubTransferService hubTransferService) {
         this.jdbcTemplate = jdbcTemplate;
+        this.hubTransferService = hubTransferService;
     }
 
     @Override
@@ -21,6 +25,11 @@ public class DataInitializer implements CommandLineRunner {
         // 테이블 클리어
         jdbcTemplate.execute("TRUNCATE TABLE public.p_hub RESTART IDENTITY CASCADE");
         System.out.println("✅ p_hub table cleared!");
+        jdbcTemplate.execute("TRUNCATE TABLE public.p_hub_connection_info RESTART IDENTITY CASCADE");
+        System.out.println("✅ p_hub_connection_info table cleared!");
+        jdbcTemplate.execute("TRUNCATE TABLE public.p_hub_transfer RESTART IDENTITY CASCADE");
+        System.out.println("✅ p_hub_transfer_info table cleared!");
+
 
         // SQL 쿼리 실행
         String sql = """
@@ -66,5 +75,30 @@ public class DataInitializer implements CommandLineRunner {
 
         jdbcTemplate.execute(sql);
         System.out.println("✅ Initial data inserted into p_hub table!");
+
+        sql = """
+        -- 연결 정보를 삽입하기 위한 INSERT 문
+        INSERT INTO p_hub_connection_info (hub_connection_info_id, from_hub_id, to_hub_id, is_deleted, created_at, created_by, updated_at, updated_by)
+        SELECT
+          gen_random_uuid() AS hub_connection_info_id,
+          from_hub.hub_id AS from_hub_id,
+          to_hub.hub_id AS to_hub_id,
+          false AS is_deleted,
+          now(),
+          'SYSTEM',
+          now(),
+          'SYSTEM'
+        FROM
+            p_hub AS from_hub,
+            p_hub AS to_hub
+        WHERE
+            from_hub.hub_id <> to_hub.hub_id
+""";
+        jdbcTemplate.execute(sql);
+        System.out.println("✅ Initial data inserted into p_connection_info table!");
+
+        System.out.println("🚦 DispatcherServlet is fully initialized. Sending POST request...");
+        hubTransferService.createHubTransfer2();
+        System.out.println("✅ POST request sent successfully after DispatcherServlet initialization!");
     }
 }
