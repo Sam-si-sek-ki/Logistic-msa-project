@@ -36,7 +36,7 @@ spring:
         - id: notification-service
           uri: lb://notification-service
           predicates:
-            - Path=/notifications/**
+            - Path=/notifications/**,/notification-service/**
       discovery:
         locator:
           enabled: true  # 서비스 디스커버리를 통해 동적으로 라우트를 생성하도록 설정
@@ -82,6 +82,8 @@ springdoc:
     urls:
       - name: auth-service
         url: /auth-service/v3/api-docs
+      - name: notification-service
+        url: /notification-service/v3/api-docs
 
 logging:
   level:
