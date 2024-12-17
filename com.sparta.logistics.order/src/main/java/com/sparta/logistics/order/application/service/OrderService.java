@@ -12,6 +12,7 @@ import com.sparta.logistics.order.libs.exception.GlobalException;
 import com.sparta.logistics.order.presentation.dto.OrderRequestDto;
 import com.sparta.logistics.order.presentation.dto.OrderResponseDto;
 import jakarta.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -69,10 +70,10 @@ public class OrderService {
     }
 
     @Transactional
-    public void deleteOrder(UUID orderId) {
+    public void deleteOrder(UUID orderId, String userName) {
         Order order = orderRepository.findById(orderId)
             .orElseThrow(() -> new GlobalException(ErrorCode.ORDER_NOT_FOUND));
-        // todo : 사용자 정보 받을 수 있을 떄 수정하기
-//        order.setDelete();
+        LocalDateTime deletedAt = LocalDateTime.now();
+        order.setDelete(deletedAt, userName);
     }
 }

@@ -53,8 +53,9 @@ public class ProductController {
 
     @DeleteMapping("/{productId}")
     @PreAuthorize("hasRole('MASTER_ADMIN') or (hasRole('HUB_ADMIN'))")
-    public ResponseEntity<SuccessResponse<?>> deleteProduct(@PathVariable UUID productId) {
-        productService.softDeleteProduct(productId);
+    public ResponseEntity<SuccessResponse<?>> deleteProduct(@PathVariable UUID productId,
+        @RequestHeader(value = "X-Username") String userName) {
+        productService.softDeleteProduct(productId, userName);
         return ResponseEntity.ok().body(SuccessResponse.of(ResponseMessage.PRODUCT_DELETE_SUCCESS));
     }
 

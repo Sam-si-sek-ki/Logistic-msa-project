@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,8 +49,9 @@ public class OrderController {
     }
 
     @DeleteMapping("/{orderId}")
-    public ResponseEntity<SuccessResponse<?>> deleteOrder(@PathVariable UUID orderId) {
-        orderService.deleteOrder(orderId);
+    public ResponseEntity<SuccessResponse<?>> deleteOrder(@PathVariable UUID orderId,
+        @RequestHeader(value = "X-Username") String userName) {
+        orderService.deleteOrder(orderId, userName);
         return ResponseEntity.ok().body(SuccessResponse.of(ResponseMessage.ORDER_DELETE_SUCCESS));
     }
 

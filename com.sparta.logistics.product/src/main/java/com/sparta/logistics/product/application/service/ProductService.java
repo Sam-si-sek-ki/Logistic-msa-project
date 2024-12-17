@@ -9,6 +9,7 @@ import com.sparta.logistics.product.libs.exception.ErrorCode;
 import com.sparta.logistics.product.libs.exception.GlobalException;
 import com.sparta.logistics.product.presentation.dto.ProductRequestDto;
 import com.sparta.logistics.product.presentation.dto.ProductResponseDto;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final CompanyFeignClient companyFeignClient;
+
     @Transactional
     public Product createProduct(ProductRequestDto request) {
         // 1. 업체 존재 여부 및 허브 아이디 확인
@@ -53,18 +55,18 @@ public class ProductService {
     }
 
     @Transactional
-    public void softDeleteProduct(UUID productId) {
+    public void softDeleteProduct(UUID productId, String username) {
         // todo : 권한 + 유저확인 후 로직 실행되도록 변경 
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new GlobalException(ErrorCode.PRODUCT_NOT_FOUND));
-
-        // todo : 게이트웨이로 부터 정보를 받아오면 수정하기
-        // product.setDelete();
+        LocalDateTime deletedAt = LocalDateTime.now();
+        product.setDelete(deletedAt, username);
     }
 
     // 주문 시 상품 존재 여부 확인 및 재고량 감소
     @Transactional
-    public ProductFeignClientResponseDto validateAndDecreaseStock(UUID productId, int orderQuantity) {
+    public ProductFeignClientResponseDto validateAndDecreaseStock(UUID productId,
+        int orderQuantity) {
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new GlobalException(ErrorCode.PRODUCT_NOT_FOUND));
 
