@@ -22,9 +22,6 @@ public class SendSlackMessageRequest {
     @NotBlank(message = "Message 내용은 필수입니다.")
     private String message;
 
-    @NotNull(message = "Status는 필수입니다.")
-    private SlackMessageStatus status;
-
     private ServiceName serviceName;
 
     private UUID referenceId;
