@@ -24,30 +24,31 @@ import org.hibernate.annotations.SQLRestriction;
 @Table(name = "p_order")
 @SQLRestriction(value = "is_deleted = false")
 public class Order extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID orderId; // auto
 
     @Column(nullable = false)
-    private UUID productId; // req dto
+    private UUID productId;
 
     @Column(nullable = false)
-    private int orderQuantity;  // requestdto
+    private int orderQuantity;
 
     @Setter
     @Column(nullable = false)
-    private UUID deliveryId; // Delivery client return
-
-    @Column(nullable = false)@Setter
-    private UUID receiverCompanyId; // Delivery client return
-
-    @Column(nullable = false) @Setter
-    private UUID supplierCompanyId; // Delivery client return
+    private UUID deliveryId;
 
     @Column(nullable = false)
-    private String orderRequirements; // req dto 요구사항
+    private UUID receiverCompanyId;
 
-    private String productName; // product client return
+    @Column(nullable = false)
+    private UUID supplierCompanyId;
+
+    @Column(nullable = false)
+    private String orderRequirements;
+
+    private String productName;
 
     public static Order create(OrderRequestDto request, String productName) {
         return Order.builder()
@@ -61,5 +62,6 @@ public class Order extends BaseEntity {
     public void update(OrderRequestDto request) {
         this.productId = request.getProductId();
         this.orderQuantity = request.getOrderQuantity();
+        this.orderRequirements = request.getOrderRequirements();
     }
 }

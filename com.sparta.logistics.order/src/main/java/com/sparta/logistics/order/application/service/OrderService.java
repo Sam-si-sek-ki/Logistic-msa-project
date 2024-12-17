@@ -44,12 +44,14 @@ public class OrderService {
         log.info("==== Received order request with name {}", receiveName);
 
         //두 회사 ID가 유효한지 확인
-        ResponseEntity<Void> response = companyServiceClient.checkCompaniesExist(
-            request.getSupplierCompanyId(),
+        ResponseEntity<Void> recComp = companyServiceClient.receiverCompanyExist(
             request.getReceiverCompanyId()
         );
+        ResponseEntity<Void> supComp = companyServiceClient.supplierCompanyExist(
+            request.getSupplierCompanyId()
+        );
 
-        if (response.getStatusCode() != HttpStatus.OK) {
+        if (recComp.getStatusCode() != HttpStatus.OK && supComp.getStatusCode() != HttpStatus.OK) {
             // 회사가 유효하지 않은 경우 예외 처리 또는 에러 반환
             throw new GlobalException(ErrorCode.INTERNAL_SERVER_ERROR);
         }

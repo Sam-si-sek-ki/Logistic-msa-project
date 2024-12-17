@@ -4,14 +4,18 @@ import java.util.UUID;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(name = "company-service")
 public interface CompanyServiceClient {
 
-    @GetMapping("/companies/validate")
-    ResponseEntity<Void> checkCompaniesExist(
-        @RequestParam UUID supplierCompanyId,
-        @RequestParam UUID receiverCompanyId
+    @GetMapping("/companies/{supplierCompanyId}")
+    ResponseEntity<Void> supplierCompanyExist(
+        @PathVariable UUID supplierCompanyId
+    );
+
+    @GetMapping("/companies/{receiverCompanyId}")
+    ResponseEntity<Void> receiverCompanyExist(
+        @PathVariable UUID receiverCompanyId
     );
 }
