@@ -1,16 +1,13 @@
 package com.sparta.logistics.order.infrastructure.dto;
 
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@AllArgsConstructor
 public class ProductResponseDto {
     private UUID productId;
     private String productName;
-
-    // Constructor, Getters, Setters
-    public ProductResponseDto(UUID productId, String productName) {
-        this.productId = productId;
-        this.productName = productName;
-    }
 }
