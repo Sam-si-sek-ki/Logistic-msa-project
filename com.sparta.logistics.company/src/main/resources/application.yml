@@ -19,8 +19,16 @@ feign:
       company-service:
         loggerLevel: FULL
 
-
 logging:
   level:
     com.sparta.logistics.delivery.infrastructure.client: DEBUG
 
+springdoc:
+  api-docs:
+    path: /company-service/v3/api-docs
+  swagger-ui:
+    path: /company-service/swagger-ui.html
+
+openapi:
+  service:
+    url: http://localhost:19091 # API Gateway 포트

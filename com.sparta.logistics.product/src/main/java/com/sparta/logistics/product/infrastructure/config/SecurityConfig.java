@@ -66,6 +66,7 @@ public class SecurityConfig {
             }, UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/products/**").permitAll()
+                .requestMatchers("/product-service/**").permitAll()
                 .anyRequest().authenticated()
             )
             .exceptionHandling(exception -> exception

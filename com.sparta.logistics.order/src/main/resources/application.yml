@@ -22,3 +22,13 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:19090/eureka/
+
+springdoc:
+  api-docs:
+    path: /order-service/v3/api-docs
+  swagger-ui:
+    path: /order-service/swagger-ui.html
+
+openapi:
+  service:
+    url: http://localhost:19091 # API Gateway 포트
