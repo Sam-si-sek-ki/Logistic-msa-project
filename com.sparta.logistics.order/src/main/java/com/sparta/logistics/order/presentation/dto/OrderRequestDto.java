@@ -19,6 +19,7 @@ public class OrderRequestDto {
         return Order.builder()
             .productId(this.productId)
             .orderQuantity(this.orderQuantity)
+            .orderRequirements(this.orderRequirements)
             .receiverCompanyId(this.receiverCompanyId)
             .supplierCompanyId(this.supplierCompanyId)
             .productName(productName)

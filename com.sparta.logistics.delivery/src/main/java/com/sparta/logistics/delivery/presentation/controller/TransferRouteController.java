@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/tranfer-routes")
+@RequestMapping("/transfer-routes")
 @RequiredArgsConstructor
 public class TransferRouteController {
 
   private final TransferRouteService transferRouteService;
 
-  @PostMapping
+  @PostMapping()
   public ResponseEntity<SuccessResponse<TransferRouteResponse>> createTransferRoute(
       @RequestBody CreateTransferRouteRequest request
   ) {
