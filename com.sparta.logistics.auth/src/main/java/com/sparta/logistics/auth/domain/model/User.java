@@ -56,7 +56,8 @@ public class User extends BaseEntity {
              String encryptedPassword,
              UserRole role,
              UUID companyId,
-             UUID hubId
+             UUID hubId,
+             String slackId
      ) {
          return User.builder()
                  .username(username)
@@ -66,6 +67,7 @@ public class User extends BaseEntity {
                  .role(role)
                  .companyId(companyId)
                  .hubId(hubId)
+                 .slackId(slackId)
                  .build();
     }
 

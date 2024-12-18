@@ -22,9 +22,10 @@ class UserTest {
         UserRole role = UserRole.COMPANY_USER;
         UUID companyId = UUID.randomUUID();
         UUID hubId = UUID.randomUUID();
+        String slackId = "MK454H";
 
         // When
-        User user = User.create(username, nickname, email, rawPassword, role, companyId, hubId);
+        User user = User.create(username, nickname, email, rawPassword, role, companyId, hubId, slackId);
 
         // Then
         assertThat(user.getUsername()).isEqualTo(username);

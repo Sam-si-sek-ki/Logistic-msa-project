@@ -47,7 +47,8 @@ public class UserService {
                 encryptedPassword,
                 request.getRole(),
                 request.getCompanyId(),
-                request.getHubId()
+                request.getHubId(),
+                request.getSlackId()
         );
 
         userRepository.save(user);

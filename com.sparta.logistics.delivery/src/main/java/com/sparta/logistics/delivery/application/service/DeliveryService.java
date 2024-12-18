@@ -11,17 +11,21 @@ import com.sparta.logistics.delivery.domain.repository.delivery.DeliveryReposito
 import com.sparta.logistics.delivery.infrastructure.client.company.CompanyClientResponse;
 import com.sparta.logistics.delivery.infrastructure.client.company.CompanyServiceClient;
 import com.sparta.logistics.delivery.infrastructure.client.order.OrderResponseDto;
+import com.sparta.logistics.delivery.infrastructure.client.user.UserResponse;
 import com.sparta.logistics.delivery.infrastructure.client.user.UserServiceClient;
 import com.sparta.logistics.delivery.infrastructure.configuration.UserContextHolder;
 import com.sparta.logistics.delivery.libs.exception.ErrorCode;
 import com.sparta.logistics.delivery.libs.exception.GlobalException;
+import com.sparta.logistics.delivery.libs.model.SuccessResponse;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,17 +45,38 @@ public class DeliveryService {
         String h_username, String role) {
 
         String username = userContextHolder.getCurrentAuditor();
-        String slackId = String.valueOf(
-            userServiceClient.getUserByUsername(username, h_username, role));
+        log.info("Request headers - X-Username: {}, X-Role: {}", username, role);
+
+        ResponseEntity<SuccessResponse<UserResponse>> response =
+            userServiceClient.getUserByUsername(username, h_username, role);
+        log.info("User service response: {}", response.getBody());
+
+        if (response.getBody() == null || response.getBody().data() == null) {
+            log.error("User response is null");
+            throw new GlobalException(ErrorCode.BAD_REQUEST);
+        }
+
+        String slackId = Optional.ofNullable(userServiceClient.getUserByUsername(username, username, role))
+            .map(ResponseEntity::getBody)         // SuccessResponse 얻기
+            .map(SuccessResponse::data)        // UserResponse 얻기
+            .map(UserResponse::getSlackId)        // slackId 얻기
+            .orElseThrow(() -> {
+                log.error("SlackId is null for user: {}", username);
+                return new GlobalException(ErrorCode.SLACK_ID_NOT_FOUND);
+            });
+
+        log.info("Request headers - X-Username: {}, X-Role: {}", username, role);
 
         // 1. 수령 업체 정보 조회
         CompanyClientResponse receiverCompany = companyServiceClient.getCompany(
-            orderResponseDto.getReceiverCompanyId()
+            orderResponseDto.getReceiverCompanyId(),
+            userContextHolder.getCurrentAuditor()
         );
 
         // 2. 공급 업체 정보 조회
         CompanyClientResponse supplierCompany = companyServiceClient.getCompany(
-            orderResponseDto.getSupplierCompanyId()
+            orderResponseDto.getSupplierCompanyId(),
+            userContextHolder.getCurrentAuditor()
         );
 
         CreateDeliveryRequest request = CreateDeliveryRequest.of(
