@@ -20,11 +20,11 @@ spring:
         - id: delivery-service
           uri: lb://delivery-service
           predicates:
-            - Path=/deliveries/**,/drivers/**
+            - Path=/deliveries/**,/drivers/**,/transfer-routes/**
         - id: hub-service
           uri: lb://hub-service
           predicates:
-            - Path=/hubs/**,/hub-transfers/**, /hub-connection-infos/**
+            - Path=/hubs/**,/hub-transfers/**,/hub-connection-infos/**
         - id: order-service
           uri: lb://order-service
           predicates:

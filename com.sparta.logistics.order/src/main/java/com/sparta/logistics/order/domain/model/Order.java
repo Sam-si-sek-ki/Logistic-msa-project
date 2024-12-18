@@ -36,7 +36,7 @@ public class Order extends BaseEntity {
     private int orderQuantity;
 
     @Setter
-    @Column(nullable = false)
+    @Column()
     private UUID deliveryId;
 
     @Column(nullable = false)
