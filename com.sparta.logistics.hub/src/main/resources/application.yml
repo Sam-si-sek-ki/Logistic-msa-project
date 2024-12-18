@@ -16,3 +16,13 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:19090/eureka/ # Eureka Server 주소
+
+springdoc:
+  api-docs:
+    path: /hub-service/v3/api-docs
+  swagger-ui:
+    path: /hub-service/swagger-ui.html
+
+openapi:
+  service:
+    url: http://localhost:19091 # API Gateway 포트

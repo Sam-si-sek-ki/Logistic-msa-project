@@ -64,6 +64,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	// 응답Json에서 원하는 값을 뽑기 위한 Jackson
 	implementation 'com.fasterxml.jackson.core:jackson-databind'
+	// Swagger
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
 }
 
 tasks.named('test') {

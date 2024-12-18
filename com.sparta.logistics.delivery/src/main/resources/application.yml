@@ -18,3 +18,13 @@ logging:
     com.sparta.logistics.delivery.infrastructure.client: DEBUG
     com.sparta.logistics.delivery: DEBUG
     org.springframework.web: DEBUG
+
+springdoc:
+  api-docs:
+    path: /delivery-service/v3/api-docs
+  swagger-ui:
+    path: /delivery-service/swagger-ui.html
+
+openapi:
+  service:
+    url: http://localhost:19091 # API Gateway 포트
