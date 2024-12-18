@@ -3,6 +3,8 @@ spring:
     name: company-service
   config:
     import: configserver:http://localhost:19092
+  mvc:
+    static-path-pattern: /static/** # 정적 리소스를 /static/**로만 제한
 
 server:
   port: 19097
@@ -10,3 +12,15 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:19090/eureka/
+
+feign:
+  client:
+    config:
+      company-service:
+        loggerLevel: FULL
+
+
+logging:
+  level:
+    com.sparta.logistics.delivery.infrastructure.client: DEBUG
+

@@ -5,7 +5,7 @@ import com.sparta.logistics.delivery.application.dto.delivery.GetDeliveryRespons
 import com.sparta.logistics.delivery.application.dto.delivery.UpdateDeliveryRequest;
 import com.sparta.logistics.delivery.application.service.DeliveryService;
 import com.sparta.logistics.delivery.domain.model.DeliveryStatus;
-import com.sparta.logistics.delivery.infrastructure.client.dto.OrderResponseDto;
+import com.sparta.logistics.delivery.infrastructure.client.order.OrderResponseDto;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
@@ -31,10 +31,20 @@ public class DeliveryController {
 
   @PostMapping
   public ResponseEntity<CreateDeliveryResponse> createDelivery(
-      @RequestBody OrderResponseDto orderResponseDto) {
-    CreateDeliveryResponse response = deliveryService.createDelivery(orderResponseDto);
+      @RequestBody OrderResponseDto orderResponseDto,
+      @RequestHeader("X-Role") String role,
+      @RequestHeader("X-Username") String username) {
+    CreateDeliveryResponse response = deliveryService.createDelivery(orderResponseDto,username,role);
     return ResponseEntity.ok(response);
   }
+
+//  @PostMapping("/test")
+//  public ResponseEntity<CreateDeliveryResponse> createDeliveryTest(
+//      @RequestBody OrderResponseDto orderResponseDto
+//  ) {
+//    return ResponseEntity.ok(deliveryService.createDelivery(orderResponseDto));
+//  }
+
 
   @PutMapping("/{deliveryId}")
   public ResponseEntity<GetDeliveryResponse> updateDelivery(
@@ -65,5 +75,6 @@ public class DeliveryController {
   ) {
     return ResponseEntity.ok(deliveryService.findDeliveries(status));
   }
+
 
 }

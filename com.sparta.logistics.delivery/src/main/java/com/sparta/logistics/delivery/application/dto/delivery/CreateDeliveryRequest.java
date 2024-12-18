@@ -3,8 +3,8 @@ package com.sparta.logistics.delivery.application.dto.delivery;
 
 import com.sparta.logistics.delivery.domain.model.Delivery;
 import com.sparta.logistics.delivery.domain.model.DeliveryStatus;
-import com.sparta.logistics.delivery.infrastructure.client.dto.CompanyClientResponse;
-import com.sparta.logistics.delivery.infrastructure.client.dto.OrderResponseDto;
+import com.sparta.logistics.delivery.infrastructure.client.company.CompanyClientResponse;
+import com.sparta.logistics.delivery.infrastructure.client.order.OrderResponseDto;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,12 +21,13 @@ public class CreateDeliveryRequest {
   private String deliveryMainAddress;
   private String deliveryDetailAddress;
   private String recipientName;
+  private String slackId;
 
   public static CreateDeliveryRequest of(
       OrderResponseDto orderResponseDto,
       CompanyClientResponse receiverCompany,
-      CompanyClientResponse supplierCompany
-  ) {
+      CompanyClientResponse supplierCompany,
+      String slackId) {
     return CreateDeliveryRequest.builder()
         .orderId(orderResponseDto.getOrderId())
         .status(DeliveryStatus.PENDING)
@@ -35,6 +36,7 @@ public class CreateDeliveryRequest {
         .deliveryMainAddress(receiverCompany.getCompanyMainAddress())
         .deliveryDetailAddress(receiverCompany.getCompanyDetailAddress())
         .recipientName(receiverCompany.getCompanyName())
+        .slackId(slackId)
         .build();
   }
 
@@ -47,6 +49,7 @@ public class CreateDeliveryRequest {
         .deliveryMainAddress(this.deliveryMainAddress)
         .deliveryDetailAddress(this.deliveryDetailAddress)
         .recipientName(this.recipientName)
+        .slackId(this.slackId)
         .build();
   }
 }

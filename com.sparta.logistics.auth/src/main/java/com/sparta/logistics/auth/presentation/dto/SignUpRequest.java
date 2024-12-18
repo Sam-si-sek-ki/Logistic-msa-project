@@ -34,7 +34,6 @@ public class SignUpRequest {
     )
     private String password;
 
-    @Email(message = "유효한 이메일 형식이어야 합니다.")
     private String slackId;
 
     @NotNull(message = "role은 필수입니다.")

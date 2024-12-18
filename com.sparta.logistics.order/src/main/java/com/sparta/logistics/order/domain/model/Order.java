@@ -14,6 +14,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Getter
@@ -21,10 +22,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Table(name = "p_order")
+@SQLRestriction(value = "is_deleted = false")
 public class Order extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID orderId;
+    private UUID orderId; // auto
 
     @Column(nullable = false)
     private UUID productId;
@@ -33,7 +36,7 @@ public class Order extends BaseEntity {
     private int orderQuantity;
 
     @Setter
-    @Column(nullable = false)
+    @Column()
     private UUID deliveryId;
 
     @Column(nullable = false)
@@ -43,7 +46,7 @@ public class Order extends BaseEntity {
     private UUID supplierCompanyId;
 
     @Column(nullable = false)
-    private String orderRequirements; // 요구사항
+    private String orderRequirements;
 
     private String productName;
 
@@ -52,11 +55,13 @@ public class Order extends BaseEntity {
             .productId(request.getProductId())
             .orderQuantity(request.getOrderQuantity())
             .productName(productName)
+            .orderRequirements(request.getOrderRequirements())
             .build();
     }
 
     public void update(OrderRequestDto request) {
         this.productId = request.getProductId();
         this.orderQuantity = request.getOrderQuantity();
+        this.orderRequirements = request.getOrderRequirements();
     }
 }

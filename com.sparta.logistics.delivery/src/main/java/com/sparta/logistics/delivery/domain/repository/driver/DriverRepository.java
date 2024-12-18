@@ -13,4 +13,7 @@ public interface DriverRepository extends JpaRepository<Driver, UUID>, DriverRep
 
   @Query("SELECT d FROM Driver d WHERE d.driverId = :driverId AND d.isDeleted = false")
   Optional<Driver> findByDriverId(@Param("driverId") UUID driverId);
+
+  @Query("SELECT d FROM Driver d WHERE d.hubId = :hubId AND d.sequence = :sequence AND d.isDeleted = false")
+  Optional<Driver> findByHubIdAndSequenceAndDeletedFalse(@Param("hubId") UUID hubId, @Param("sequence") int sequence);
 }

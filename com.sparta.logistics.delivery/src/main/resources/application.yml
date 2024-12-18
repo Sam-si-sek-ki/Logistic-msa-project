@@ -15,3 +15,6 @@ logging:
   level:
     feign: DEBUG
     feign.Logger: DEBUG
+    com.sparta.logistics.delivery.infrastructure.client: DEBUG
+    com.sparta.logistics.delivery: DEBUG
+    org.springframework.web: DEBUG

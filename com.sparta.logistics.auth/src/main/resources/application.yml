@@ -1,22 +1,8 @@
 spring:
   application:
     name: auth-service
-
-  datasource:
-    url: jdbc:postgresql://localhost:15432/sparta_auth
-    username: sparta_auth
-    password: sparta_auth
-    driver-class-name: org.postgresql.Driver
-
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-#    defer-datasource-initialization: true # 테이블 생성 후에 data.sql 실행
+  config:
+    import: configserver:http://localhost:19092   # Config Server 주소
 
 server:
   port: 19093
