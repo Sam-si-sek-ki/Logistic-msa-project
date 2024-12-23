@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @FeignClient(name = "company-service")
 public interface CompanyServiceClient {
 
-  @GetMapping("/api/companies/{companyId}")
+  @GetMapping("/companies/{companyId}")
   CompanyClientResponse getCompany(@PathVariable("companyId") UUID companyId,
       @RequestHeader(value = "X-Username", required = false) String username
   );

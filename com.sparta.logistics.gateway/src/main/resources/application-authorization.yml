@@ -121,8 +121,32 @@ authorization:
         - DELIVERY_USER
 
     ###### Company ######
+    - path: /companies/**
+      method:
+        - GET
+        - POST
+        - PATCH
+        - PUT
+        - DELETE
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+        - DELIVERY_USER
+        - COMPANY_USER
 
     ###### Delivery ######
+    - path: /deliveries/**
+      method:
+        - GET
+        - POST
+        - PATCH
+        - PUT
+        - DELETE
+      roles:
+        - MASTER_ADMIN
+        - HUB_ADMIN
+        - DELIVERY_USER
+        - COMPANY_USER
 
     ###### Notification ######
     - path: /notifications/**

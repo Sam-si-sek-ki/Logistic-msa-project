@@ -16,23 +16,23 @@ spring:
         - id: company-service
           uri: lb://company-service
           predicates:
-            - Path=/companies/**
+            - Path=/companies/**,/company-service/**
         - id: delivery-service
           uri: lb://delivery-service
           predicates:
-            - Path=/deliveries/**,/drivers/**,/transfer-routes/**
+            - Path=/deliveries/**,/drivers/**,/transfer-routes/**,/delivery-service/**
         - id: hub-service
           uri: lb://hub-service
           predicates:
-            - Path=/hubs/**,/hub-transfers/**,/hub-connection-infos/**
+            - Path=/hubs/**,/hub-transfers/**,/hub-connection-infos/**,/hub-service/**
         - id: order-service
           uri: lb://order-service
           predicates:
-            - Path=/orders/**
+            - Path=/orders/**,/order-service/**
         - id: product-service
           uri: lb://product-service
           predicates:
-            - Path=/products/**
+            - Path=/products/**,/product-service/**
         - id: notification-service
           uri: lb://notification-service
           predicates:
@@ -78,6 +78,16 @@ springdoc:
         url: /auth-service/v3/api-docs
       - name: notification-service
         url: /notification-service/v3/api-docs
+      - name: company-service
+        url: /company-service/v3/api-docs
+      - name: delivery-service
+        url: /delivery-service/v3/api-docs
+      - name: hub-service
+        url: /hub-service/v3/api-docs
+      - name: order-service
+        url: /order-service/v3/api-docs
+      - name: product-service
+        url: /product-service/v3/api-docs
 
 logging:
   level:
